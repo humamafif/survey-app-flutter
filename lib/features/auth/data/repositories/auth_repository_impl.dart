@@ -18,7 +18,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final user = await remoteDataSource.signIn(email, password);
       return Right(user);
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(AuthFailure("⚠️ Gagal SignIn"));
     }
   }
 
@@ -31,7 +31,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final user = await remoteDataSource.signUp(email, password);
       return Right(user);
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(AuthFailure("⚠️ Gagal SignUp"));
     }
   }
 
@@ -41,7 +41,7 @@ class AuthRepositoryImpl implements AuthRepository {
       await remoteDataSource.signOut();
       return const Right(null);
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(AuthFailure("⚠️ Gagal SignOut"));
     }
   }
 
@@ -53,7 +53,7 @@ class AuthRepositoryImpl implements AuthRepository {
           await remoteDataSource.getCurrent(); // Ambil dari RemoteDatasource
       return Right(user);
     } catch (e) {
-      return Left(ServerFailure());
+      return Left(AuthFailure("⚠️ Gagal get current user"));
     }
   }
 }

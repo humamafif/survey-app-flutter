@@ -5,6 +5,7 @@ import 'package:survey_app/features/auth/domain/usecases/signin_usecase.dart';
 import 'package:survey_app/features/auth/domain/usecases/signout_usecase.dart';
 import 'package:survey_app/features/auth/domain/usecases/signup_usecase.dart';
 import 'package:survey_app/features/auth/presentation/bloc/auth_event.dart';
+import 'package:survey_app/shared/utils/student_email_check.dart';
 import 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -39,6 +40,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<SignUpEvent>((event, emit) async {
       print("📩 SignUpEvent dipanggil dengan email: ${event.email}");
+      // STUDENT EMAIL VALIDATION
+      if (!isStudentEmail(event.email)) {
+        emit(AuthInitial());
+        emit(AuthFailure("❌ Hanya email student yang bisa mendaftar!"));
+        return;
+      }
 
       emit(AuthLoading());
       final result = await signUpUseCase(event.email, event.password);

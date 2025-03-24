@@ -38,7 +38,7 @@ class CustomTextFieldState extends State<CustomTextField> {
           cursorColor: Colors.grey,
           obscureText: _isPassword,
           controller: widget.controller,
-          decoration: InputDecoration( 
+          decoration: InputDecoration(
             suffixIcon:
                 widget.isPassword
                     ? IconButton(
