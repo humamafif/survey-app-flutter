@@ -1,0 +1,27 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:survey_app/shared/widget/custom_card_carousel_widget.dart';
+
+class CustomCarousel extends StatelessWidget {
+  const CustomCarousel({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: 200.sp,
+        autoPlay: true,
+        enlargeCenterPage: true,
+      ),
+      items:
+          [1, 2, 3, 4, 5].map((i) {
+            return Builder(
+              builder: (BuildContext context) {
+                return CustomCardCarousel();
+              },
+            );
+          }).toList(),
+    );
+  }
+}
