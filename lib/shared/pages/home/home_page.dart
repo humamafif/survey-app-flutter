@@ -12,26 +12,41 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("📱 HOME PAGE");
     return Scaffold(
       appBar: AppBar(title: const Text("Survey App")),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is Unauthenticated) {
+            print("STATE: $state");
             context.goNamed("/login");
           }
         },
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
+            print("State : $state");
             if (state is AuthLoading) {
+              print("STATE: $state");
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (state is AuthSuccess) {
+            if (state is Authenticated) {
+              print("STATE: $state");
               return _buildHomeContent(state.user.email ?? "User");
+            } else {
+              print("STATE: $state");
+              return const Center(child: Text("User tidak terautentikasi"));
             }
 
+            // if (state is LoginSuccess) {
+            //   print("STATE: $state");
+            //   return _buildHomeContent(state.user.email ?? "User");
+            // }
+
             // Jika tidak ada state yang cocok, tampilkan loading
-            return const Center(child: Text("tidak ada state yang cocok"));
+            return Center(
+              child: Text("tidak ada state yang cocok ${state.toString()}"),
+            );
           },
         ),
       ),

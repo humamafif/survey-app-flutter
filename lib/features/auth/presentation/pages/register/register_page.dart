@@ -1,10 +1,11 @@
-// lib/features/auth/presentation/pages/register_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:survey_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:survey_app/features/auth/presentation/bloc/auth_state.dart';
+import 'package:survey_app/shared/utils/password_check.dart';
+import 'package:survey_app/shared/utils/show_snackbar.dart';
 import 'package:survey_app/shared/utils/student_email_check.dart';
 import 'package:survey_app/shared/widget/custom_textfield.dart';
 
@@ -16,6 +17,7 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("📱 REGISTER PAGE");
     return Scaffold(
       appBar: AppBar(
         title: Text("Register"),
@@ -39,40 +41,59 @@ class RegisterPage extends StatelessWidget {
             ),
 
             SizedBox(height: 20),
-            Builder(
-              builder: (context) {
-                return BlocConsumer<AuthBloc, AuthState>(
-                  listener: (context, state) {
-                    print("Listener: $state");
-                    if (state is AuthFailure) {
-                      print("SHOW SNACKBAR!");
-                      ScaffoldMessenger.of(context).clearSnackBars();
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(SnackBar(content: Text(state.message)));
-                    } else if (state is AuthSuccess) {
-                      // GoRouter.of(context).pop();
-                      context.goNamed("/login");
+            BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                print("Listener: $state");
+                if (state is AuthFailure) {
+                  print("STATE: $state");
+                  print("❌ Registrasi gagal: ${state.message}");
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.message),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else if (state is RegisterSuccess) {
+                  // Registrasi sukses, tampilkan snackbar & arahkan ke login
+                  print("STATE: $state");
+                  ScaffoldMessenger.of(context).clearSnackBars();
+                  showSnackbar(
+                    context,
+                    "✅ Registrasi berhasil, silakan login!",
+                    Colors.blue,
+                  );
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   SnackBar(
+                  //     content: Text(),
+                  //     backgroundColor: Colors.blue,
+                  //   ),
+                  // );
+                  Future.microtask(() => context.go("/login"));
+                }
+              },
+              builder: (context, state) {
+                print("STATE: ${state}");
+                if (state is AuthLoading) {
+                  return CircularProgressIndicator();
+                }
+                return ElevatedButton(
+                  onPressed: () {
+                    if (isStudentEmail(emailController.text, context) &&
+                        handlePassword(passwordController.text, context)) {
+                      print("✅ Email valid, lanjutkan pendaftaran...");
+                      context.read<AuthBloc>().add(
+                        SignUpEvent(
+                          emailController.text,
+                          passwordController.text,
+                        ),
+                      );
+                    } else {
+                      print("⚠️ Email tidak valid, hentikan pendaftaran...");
+                      return;
                     }
                   },
-                  builder: (context, state) {
-                    print("STATE: ${state}");
-                    if (state is AuthLoading) {
-                      return CircularProgressIndicator();
-                    }
-                    return ElevatedButton(
-                      onPressed: () {
-                        debugEmailValidation(emailController.text);
-                        context.read<AuthBloc>().add(
-                          SignUpEvent(
-                            emailController.text,
-                            passwordController.text,
-                          ),
-                        );
-                      },
-                      child: Text("Register"),
-                    );
-                  },
+                  child: Text("Register"),
                 );
               },
             ),

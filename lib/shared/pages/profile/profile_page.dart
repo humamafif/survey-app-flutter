@@ -10,6 +10,30 @@ import 'package:survey_app/features/auth/presentation/bloc/auth_state.dart';
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: Text("Konfirmasi Logout"),
+            content: Text("Apakah Anda yakin ingin keluar?"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context), // Tutup dialog
+                child: Text("Batal"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Tutup dialog sebelum logout
+                  context.read<AuthBloc>().add(SignOutEvent());
+                },
+                child: Text("Ya"),
+              ),
+            ],
+          ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
@@ -31,12 +55,12 @@ class ProfilePage extends StatelessWidget {
               12.verticalSpace,
               Text("Username"),
               4.verticalSpace,
-              Text(user?.email ?? "No email"), // Mencegah error jika user null
+              Text(user?.email ?? "No email"),
               ElevatedButton(
-                onPressed: () {
-                  print("👋 Tombol Logout ditekan...");
-                  context.read<AuthBloc>().add(SignOutEvent());
-                },
+                onPressed:
+                    () => _showLogoutDialog(
+                      context,
+                    ), // Tampilkan dialog konfirmasi
                 child: Text("Logout"),
               ),
             ],
