@@ -37,16 +37,6 @@ class HomePage extends StatelessWidget {
               print("STATE: $state");
               return const Center(child: Text("User tidak terautentikasi"));
             }
-
-            // if (state is LoginSuccess) {
-            //   print("STATE: $state");
-            //   return _buildHomeContent(state.user.email ?? "User");
-            // }
-
-            // Jika tidak ada state yang cocok, tampilkan loading
-            return Center(
-              child: Text("tidak ada state yang cocok ${state.toString()}"),
-            );
           },
         ),
       ),

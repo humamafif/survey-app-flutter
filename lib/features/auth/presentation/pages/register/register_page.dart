@@ -56,19 +56,13 @@ class RegisterPage extends StatelessWidget {
                   );
                 } else if (state is RegisterSuccess) {
                   // Registrasi sukses, tampilkan snackbar & arahkan ke login
-                  print("STATE: $state");
+                  print("STATE Halaman Register: $state");
                   ScaffoldMessenger.of(context).clearSnackBars();
                   showSnackbar(
                     context,
                     "✅ Registrasi berhasil, silakan login!",
                     Colors.blue,
                   );
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   SnackBar(
-                  //     content: Text(),
-                  //     backgroundColor: Colors.blue,
-                  //   ),
-                  // );
                   Future.microtask(() => context.go("/login"));
                 }
               },
