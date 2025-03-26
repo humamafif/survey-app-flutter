@@ -29,11 +29,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       result.fold(
         (failure) {
           print("❌ Sign-in gagal: ${failure.message}");
-          emit(AuthFailure(failure.message));
+          emit(AuthFailureState(failure.message));
         },
         (user) {
           print("✅ Sign-in sukses! Selamat datang, ${user.email}");
-          emit(LoginSuccess(user));
+          emit(LoginSuccess(user: user, message: "Login Success"));
           print("STATE login event: $state");
 
           emit(Authenticated(user: user));
@@ -52,11 +52,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await result.fold(
         (failure) async {
           print("❌ Sign-up gagal: ${failure.message}");
-          emit(AuthFailure(failure.message));
+          emit(AuthFailureState(failure.message));
         },
         (user) async {
           print("🎉 Sign-up sukses! Akun ${user.email} berhasil dibuat.");
-          emit(RegisterSuccess());
+          emit(RegisterSuccess(message: "Registrasi Success"));
           print("STATE register event: $state");
           await FirebaseAuth.instance.signOut().then((_) {
             print("SIGNOUT DULU BESTIEH");

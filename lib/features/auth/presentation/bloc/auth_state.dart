@@ -18,14 +18,21 @@ class AuthLoading extends AuthState {}
 // ✅ State Sukses Login
 class LoginSuccess extends AuthState {
   final UserEntity user;
-  LoginSuccess(this.user);
+  final String message;
+  LoginSuccess({required this.user, required this.message});
 
   @override
   List<Object> get props => [user];
 }
 
 // ✅ State Sukses Register
-class RegisterSuccess extends AuthState {}
+class RegisterSuccess extends AuthState {
+  final String message;
+  RegisterSuccess({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
 
 // ✅ State Authenticated (User Sudah Login)
 class Authenticated extends AuthState {
@@ -40,9 +47,9 @@ class Authenticated extends AuthState {
 class Unauthenticated extends AuthState {}
 
 // ✅ State Gagal
-class AuthFailure extends AuthState {
+class AuthFailureState extends AuthState {
   final String message;
-  AuthFailure(this.message);
+  AuthFailureState(this.message);
 
   @override
   List<Object> get props => [message];

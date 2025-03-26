@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_app/shared/utils/password_check.dart';
+import 'package:survey_app/shared/utils/show_snackbar.dart';
 import 'package:survey_app/shared/utils/student_email_check.dart';
 import 'package:survey_app/shared/widget/custom_textfield.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,22 +40,12 @@ class LoginPage extends StatelessWidget {
             12.verticalSpace,
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
-                if (state is AuthFailure) {
+                if (state is AuthFailureState) {
                   print("STATE: $state");
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("gagal Login: ${state.message}"),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
+                  showSnackbar(context, state.message, Colors.red);
                 } else if (state is LoginSuccess) {
                   print("STATE: $state");
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("✅ Login berhasil!"),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
+                  showSnackbar(context, state.message, Colors.green);
                   Future.microtask(() => context.go("/home"));
                 }
               },

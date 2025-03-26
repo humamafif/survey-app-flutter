@@ -16,19 +16,3 @@ class ServerFailure extends Failure {
 class NetworkFailure extends Failure {
   const NetworkFailure([super.message = "Tidak ada koneksi internet"]);
 }
-
-class AuthFailure extends Failure {
-  const AuthFailure([super.message = "Email atau password salah"]);
-}
-
-class UserNotFoundFailure extends Failure {
-  const UserNotFoundFailure([super.message = "User tidak ditemukan"]);
-}
-
-class UserAlreadyExistsFailure extends Failure {
-  const UserAlreadyExistsFailure([super.message = "User sudah terdaftar"]);
-}
-
-class InvalidInputFailure extends Failure {
-  const InvalidInputFailure([super.message = "Input tidak valid"]);
-}
