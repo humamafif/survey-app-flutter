@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:survey_app/core/injections.dart';
 import 'package:survey_app/core/router/app_route.dart';
 import 'package:survey_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:survey_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:survey_app/firebase_options.dart';
 
 Future<void> main() async {
@@ -22,13 +21,10 @@ class SurveyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider<AuthBloc>(
-          create: (context) => sl<AuthBloc>()..add(CheckAuthEvent()),
-        ),
-      ],
+      providers: [BlocProvider<AuthBloc>(create: (context) => sl<AuthBloc>())],
       child: ScreenUtilInit(
         child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
           title: 'Survey App',
           theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme()),
           routerConfig: AppRouter.router,

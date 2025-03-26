@@ -16,29 +16,45 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     print("📱 SPLASH SCREEN");
-    // Cek status autentikasi saat splash screen dibuka
     context.read<AuthBloc>().add(CheckAuthEvent());
+  }
+
+  void _navigateWithDelay(BuildContext context, String route) {
+    Future.delayed(Duration(seconds: 3), () {
+      if (mounted) {
+        // Pastikan widget masih aktif sebelum navigasi
+        GoRouter.of(context).go(route);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
+        print("📢 BlocListener menerima state baru: $state");
         if (state is Authenticated) {
-          print("✅ User terautentikasi. Navigasi ke /home...");
-          GoRouter.of(context).go('/home');
+          print("STATE: $state");
+          print("✅ User terautentikasi. Navigasi ke /home dalam 3 detik...");
+          _navigateWithDelay(context, "/home");
+          // Future.microtask(() => GoRouter.of(context).go('/home'));
+        } else if (state is RegisterSuccess) {
+          print("STATE: $state");
+          print("✅ User terautentikasi. Navigasi ke /login dalam 3 detik...");
+          _navigateWithDelay(context, "/login");
         } else if (state is Unauthenticated) {
-          print("🚪 User tidak terautentikasi. Navigasi ke /login...");
-          GoRouter.of(context).go('/login');
+          print("STATE: $state");
+          print(
+            "🚪 User tidak terautentikasi. Navigasi ke /login dalam 3 detik...",
+          );
+          _navigateWithDelay(context, "/login");
+        } else {
+          print("state: $state");
         }
       },
-      child: Scaffold(
-        body: Center(
-          child:
-              CircularProgressIndicator(), // Animasi loading selama pengecekan auth
-        ),
-      ),
+      child: Scaffold(body: Center(child: Text("loading splash"))),
     );
   }
 }

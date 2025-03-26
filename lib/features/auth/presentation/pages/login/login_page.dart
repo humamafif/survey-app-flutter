@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:survey_app/shared/utils/password_check.dart';
+import 'package:survey_app/shared/utils/student_email_check.dart';
 import 'package:survey_app/shared/widget/custom_textfield.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:survey_app/features/auth/presentation/bloc/auth_bloc.dart';
@@ -15,6 +17,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("📱 LOGIN PAGE");
     return Scaffold(
       appBar: AppBar(title: Text("Login Page")),
       body: Padding(
@@ -37,16 +40,27 @@ class LoginPage extends StatelessWidget {
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state is AuthFailure) {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(state.message)));
-                } else if (state is AuthSuccess) {
-                  context.go("/home");
+                  print("STATE: $state");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("gagal Login: ${state.message}"),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else if (state is LoginSuccess) {
+                  print("STATE: $state");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("✅ Login berhasil!"),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                  Future.microtask(() => context.go("/home"));
                 }
               },
               builder: (context, state) {
                 if (state is AuthLoading) {
-                  return const CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
                 }
                 return SizedBox(
                   width: double.infinity,
@@ -56,12 +70,16 @@ class LoginPage extends StatelessWidget {
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () {
-                      context.read<AuthBloc>().add(
-                        SignInEvent(
-                          emailController.text,
-                          passwordController.text,
-                        ),
-                      );
+                      if (isStudentEmail(emailController.text, context) &&
+                          handlePassword(passwordController.text, context)) {
+                        print("🚀 Login!");
+                        context.read<AuthBloc>().add(
+                          SignInEvent(
+                            emailController.text,
+                            passwordController.text,
+                          ),
+                        );
+                      }
                     },
                     child: Text("Sign In"),
                   ),
