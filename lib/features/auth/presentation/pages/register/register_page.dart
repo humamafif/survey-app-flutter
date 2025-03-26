@@ -44,31 +44,16 @@ class RegisterPage extends StatelessWidget {
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
                 print("Listener: $state");
-                if (state is AuthFailure) {
+                if (state is AuthFailureState) {
                   print("STATE: $state");
                   print("❌ Registrasi gagal: ${state.message}");
                   ScaffoldMessenger.of(context).clearSnackBars();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.message),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
+                  showSnackbar(context, state.message, Colors.red);
                 } else if (state is RegisterSuccess) {
                   // Registrasi sukses, tampilkan snackbar & arahkan ke login
-                  print("STATE: $state");
+                  print("STATE Halaman Register: $state");
                   ScaffoldMessenger.of(context).clearSnackBars();
-                  showSnackbar(
-                    context,
-                    "✅ Registrasi berhasil, silakan login!",
-                    Colors.blue,
-                  );
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   SnackBar(
-                  //     content: Text(),
-                  //     backgroundColor: Colors.blue,
-                  //   ),
-                  // );
+                  showSnackbar(context, state.message, Colors.green);
                   Future.microtask(() => context.go("/login"));
                 }
               },
