@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:survey_app/core/theme/colors/app_color.dart';
 import 'package:survey_app/shared/utils/password_check.dart';
 import 'package:survey_app/shared/utils/show_snackbar.dart';
 import 'package:survey_app/shared/utils/student_email_check.dart';
@@ -42,10 +43,10 @@ class LoginPage extends StatelessWidget {
               listener: (context, state) {
                 if (state is AuthFailureState) {
                   print("STATE: $state");
-                  showSnackbar(context, state.message, Colors.red);
+                  showSnackbar(context, state.message, AppColor.errorColor);
                 } else if (state is LoginSuccess) {
                   print("STATE: $state");
-                  showSnackbar(context, state.message, Colors.green);
+                  showSnackbar(context, state.message, AppColor.successColor);
                   Future.microtask(() => context.go("/home"));
                 }
               },
