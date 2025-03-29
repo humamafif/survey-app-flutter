@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:survey_app/core/theme/colors/app_color.dart';
 import 'package:survey_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:survey_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:survey_app/features/auth/presentation/bloc/auth_state.dart';
@@ -48,12 +49,12 @@ class RegisterPage extends StatelessWidget {
                   print("STATE: $state");
                   print("❌ Registrasi gagal: ${state.message}");
                   ScaffoldMessenger.of(context).clearSnackBars();
-                  showSnackbar(context, state.message, Colors.red);
+                  showSnackbar(context, state.message, AppColor.errorColor);
                 } else if (state is RegisterSuccess) {
                   // Registrasi sukses, tampilkan snackbar & arahkan ke login
                   print("STATE Halaman Register: $state");
                   ScaffoldMessenger.of(context).clearSnackBars();
-                  showSnackbar(context, state.message, Colors.green);
+                  showSnackbar(context, state.message, AppColor.successColor);
                   Future.microtask(() => context.go("/login"));
                 }
               },
