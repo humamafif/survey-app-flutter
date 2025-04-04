@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:survey_app/shared/widget/custom_card_survey.dart';
-import 'package:survey_app/shared/widget/custom_carousel_widget.dart';
-import 'package:survey_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:survey_app/features/auth/presentation/bloc/auth_state.dart';
+import 'package:survey_app/core/app/app_export.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

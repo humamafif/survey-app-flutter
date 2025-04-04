@@ -1,7 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:survey_app/shared/widget/custom_card_carousel_widget.dart';
+import 'package:survey_app/core/app/app_export.dart';
 
 class CustomCarousel extends StatelessWidget {
   const CustomCarousel({super.key});

@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:survey_app/core/app/app_export.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({

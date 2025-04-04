@@ -1,13 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get_it/get_it.dart';
-import 'package:survey_app/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:survey_app/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:survey_app/features/auth/domain/repositories/auth_repository.dart';
-import 'package:survey_app/features/auth/domain/usecases/check_auth_usecase.dart';
-import 'package:survey_app/features/auth/domain/usecases/signin_usecase.dart';
-import 'package:survey_app/features/auth/domain/usecases/signout_usecase.dart';
-import 'package:survey_app/features/auth/domain/usecases/signup_usecase.dart';
-import 'package:survey_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:survey_app/core/app/app_export.dart';
 
 var sl = GetIt.instance;
 

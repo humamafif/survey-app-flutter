@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:survey_app/core/app/app_export.dart';
 
 class CustomCardCarousel extends StatelessWidget {
   const CustomCardCarousel({super.key});
