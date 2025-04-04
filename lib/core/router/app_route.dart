@@ -1,13 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:survey_app/features/auth/presentation/pages/login/login_page.dart';
-import 'package:survey_app/shared/pages/home/home_page.dart';
-import 'package:survey_app/shared/pages/profile/profile_page.dart';
-import 'package:survey_app/shared/pages/splash/splash_screen.dart';
-import 'package:survey_app/shared/widget/navigation.dart';
-import 'package:survey_app/core/router/app_route_enum.dart';
-import 'package:survey_app/features/auth/presentation/pages/register/register_page.dart';
-import 'package:survey_app/features/survey/survey_page.dart';
+import 'package:survey_app/core/app/app_export.dart';
 
 /*
 Example Use of Go_Router:

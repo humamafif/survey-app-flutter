@@ -1,6 +1,4 @@
-import 'package:dartz/dartz.dart';
-import 'package:survey_app/core/error/failure.dart';
-import 'package:survey_app/features/auth/domain/entities/user_entity.dart';
+import 'package:survey_app/core/app/app_export.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, UserEntity>> signIn(String email, String password);

@@ -1,5 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:survey_app/features/auth/data/models/user_model.dart';
+import 'package:survey_app/core/app/app_export.dart';
 
 abstract class AuthRemoteDatasource {
   Future<UserModel> signIn(String email, String password);

@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+import 'package:survey_app/core/app/app_export.dart';
 
 abstract class Failure extends Equatable {
   final String message;

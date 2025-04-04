@@ -1,4 +1,4 @@
-import 'package:survey_app/features/auth/domain/entities/user_entity.dart';
+import 'package:survey_app/core/app/app_export.dart';
 
 class UserModel extends UserEntity {
   const UserModel({required super.uid, super.email});

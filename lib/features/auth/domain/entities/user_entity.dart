@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+import 'package:survey_app/core/app/app_export.dart';
 
 class UserEntity extends Equatable {
   final String uid;

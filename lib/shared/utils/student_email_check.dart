@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:survey_app/shared/utils/show_snackbar.dart';
+import 'package:survey_app/core/app/app_export.dart';
 
 bool isStudentEmail(String email, BuildContext context) {
   final regex = RegExp(r'^(\d{12})@student\.uin-malang\.ac\.id$');

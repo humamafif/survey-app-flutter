@@ -1,10 +1,4 @@
-import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:survey_app/core/error/auth/auth_failure.dart';
-import 'package:survey_app/core/error/failure.dart';
-import 'package:survey_app/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:survey_app/features/auth/domain/entities/user_entity.dart';
-import 'package:survey_app/features/auth/domain/repositories/auth_repository.dart';
+import 'package:survey_app/core/app/app_export.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDatasource remoteDataSource;
