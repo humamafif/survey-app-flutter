@@ -1,4 +1,4 @@
-import 'package:survey_app/core/app/app_export.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -45,24 +45,38 @@ class LoginPage extends StatelessWidget {
                 }
                 return SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
-                      foregroundColor: Colors.white,
-                    ),
-                    onPressed: () {
-                      if (isStudentEmail(emailController.text, context) &&
-                          handlePassword(passwordController.text, context)) {
-                        print("🚀 Login!");
-                        context.read<AuthBloc>().add(
-                          SignInEvent(
-                            emailController.text,
-                            passwordController.text,
-                          ),
-                        );
-                      }
-                    },
-                    child: Text("Sign In"),
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey,
+                          foregroundColor: Colors.white,
+                        ),
+                        onPressed: () {
+                          if (isStudentEmail(emailController.text, context) &&
+                              handlePassword(
+                                passwordController.text,
+                                context,
+                              )) {
+                            print("🚀 Login!");
+                            context.read<AuthBloc>().add(
+                              SignInEvent(
+                                emailController.text,
+                                passwordController.text,
+                              ),
+                            );
+                          }
+                        },
+                        child: Text("Sign In"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          print("🚀 SignInWithGoogleEvent!");
+                          context.read<AuthBloc>().add(SignInWithGoogleEvent());
+                        },
+                        child: Text("Sign In with Google"),
+                      ),
+                    ],
                   ),
                 );
               },

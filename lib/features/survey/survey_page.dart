@@ -1,4 +1,4 @@
-import 'package:survey_app/core/app/app_export.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class SurveyPage extends StatelessWidget {
   const SurveyPage({super.key});

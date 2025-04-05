@@ -1,15 +1,19 @@
-import 'package:survey_app/core/app/app_export.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SigninUsecase signInUseCase;
   final SignupUsecase signUpUseCase;
   final SignoutUsecase signOutUseCase;
+  final SignupWithGoogleUsecase signUpWithGoogleUsecase;
+  final SigninWithGoogleUsecase signInWithGoogleUsecase;
   final CheckAuthUsecase checkAuthUsecase;
 
   AuthBloc({
     required this.checkAuthUsecase,
     required this.signInUseCase,
     required this.signUpUseCase,
+    required this.signUpWithGoogleUsecase,
+    required this.signInWithGoogleUsecase,
     required this.signOutUseCase,
   }) : super(AuthInitial()) {
     // ✅ Handle Login
@@ -111,6 +115,51 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             emit(Unauthenticated());
             print("State: $state");
           }
+        },
+      );
+    });
+
+    on<SignUpWithGoogleEvent>((event, emit) async {
+      print("📧 SignUpWithGoogleEvent dipanggil...");
+      emit(AuthLoading());
+
+      final result = await signUpWithGoogleUsecase();
+
+      result.fold(
+        (failure) {
+          print("❌ Gagal login dengan Google: ${failure.message}");
+          emit(AuthFailureState(failure.message));
+        },
+        (user) async {
+          print("✅ Login dengan Google sukses! Selamat datang, ${user.email}");
+          emit(RegisterSuccess(message: "Register Success"));
+          await FirebaseAuth.instance.signOut().then((_) {
+            print("SIGNOUT DULU BESTIEH");
+
+            if (!emit.isDone) {
+              emit(Unauthenticated());
+              print("STATE register event: $state");
+            }
+          });
+        },
+      );
+    });
+
+    on<SignInWithGoogleEvent>((event, emit) async {
+      print("📧 SignInWithGoogleEvent dipanggil...");
+      emit(AuthLoading());
+
+      final result = await signInWithGoogleUsecase();
+
+      result.fold(
+        (failure) {
+          print("❌ Gagal login dengan Google: ${failure.message}");
+          emit(AuthFailureState(failure.message));
+        },
+        (user) {
+          print("✅ Login dengan Google sukses! Selamat datang, ${user.email}");
+          emit(LoginSuccess(user: user, message: "Login Success"));
+          emit(Authenticated(user: user));
         },
       );
     });

@@ -1,4 +1,4 @@
-import 'package:survey_app/core/app/app_export.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 abstract class AuthEvent extends Equatable {
   @override
@@ -32,3 +32,8 @@ class SignOutEvent extends AuthEvent {}
 
 // ✅ Event Cek Autentikasi
 class CheckAuthEvent extends AuthEvent {}
+
+// ✅ Event SignUp with Google
+class SignUpWithGoogleEvent extends AuthEvent {}
+
+class SignInWithGoogleEvent extends AuthEvent {}
