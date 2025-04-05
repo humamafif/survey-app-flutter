@@ -12,7 +12,20 @@
           "package_name": "com.example.survey_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1007630993508-d6q2qfg50mtaqq95k9tqhdbapduosl7i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.survey_app",
+            "certificate_hash": "fafc73095c5830c9feafa50c2a20101e7cf2a4b3"
+          }
+        },
+        {
+          "client_id": "1007630993508-li5cp0bj8kj8j7jl6u8roqoeio825luf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC7huYD--r3-QhyoSUc6Oz79xFWvQsi3lw"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007630993508-li5cp0bj8kj8j7jl6u8roqoeio825luf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1007630993508-ruino9clvlhai7b662f1hcgnl2irn09h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.surveyApp"
+              }
+            }
+          ]
         }
       }
     }
