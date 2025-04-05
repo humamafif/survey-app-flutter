@@ -1,4 +1,4 @@
-import 'package:survey_app/core/app/app_export.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 void showSnackbar(BuildContext context, String message, Color color) {
   ScaffoldMessenger.of(context).clearSnackBars();

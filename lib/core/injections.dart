@@ -1,4 +1,5 @@
-import 'package:survey_app/core/app/app_export.dart';
+import 'package:survey_app/core/app/app_exports.dart';
+import 'package:survey_app/features/auth/domain/usecases/signin_with_google_usecase.dart';
 
 var sl = GetIt.instance;
 
@@ -6,9 +7,12 @@ Future<void> initServiceLocator() async {
   // FIREBASE
   sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
 
+  // SIGN IN WITH GOOGLE
+  sl.registerLazySingleton<GoogleSignIn>(() => GoogleSignIn());
+
   // Data sources
   sl.registerLazySingleton<AuthRemoteDatasource>(
-    () => AuthRemoteDatasourceImpl(auth: sl()),
+    () => AuthRemoteDatasourceImpl(auth: sl(), googleSignIn: sl()),
   );
 
   // Repository
@@ -20,6 +24,8 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton(() => SigninUsecase(repository: sl()));
   sl.registerLazySingleton(() => SignupUsecase(repository: sl()));
   sl.registerLazySingleton(() => SignoutUsecase(repository: sl()));
+  sl.registerLazySingleton(() => SignupWithGoogleUsecase(repository: sl()));
+  sl.registerLazySingleton(() => SigninWithGoogleUsecase(repository: sl()));
   sl.registerLazySingleton(() => CheckAuthUsecase(repository: sl()));
 
   // Bloc
@@ -29,6 +35,8 @@ Future<void> initServiceLocator() async {
       signUpUseCase: sl(),
       signOutUseCase: sl(),
       checkAuthUsecase: sl(),
+      signUpWithGoogleUsecase: sl(),
+      signInWithGoogleUsecase: sl(),
     ),
   );
 }

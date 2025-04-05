@@ -1,4 +1,4 @@
-import 'package:survey_app/core/app/app_export.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class RegisterPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -53,23 +53,36 @@ class RegisterPage extends StatelessWidget {
                 if (state is AuthLoading) {
                   return CircularProgressIndicator();
                 }
-                return ElevatedButton(
-                  onPressed: () {
-                    if (isStudentEmail(emailController.text, context) &&
-                        handlePassword(passwordController.text, context)) {
-                      print("✅ Email valid, lanjutkan pendaftaran...");
-                      context.read<AuthBloc>().add(
-                        SignUpEvent(
-                          emailController.text,
-                          passwordController.text,
-                        ),
-                      );
-                    } else {
-                      print("⚠️ Email tidak valid, hentikan pendaftaran...");
-                      return;
-                    }
-                  },
-                  child: Text("Register"),
+                return Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        if (isStudentEmail(emailController.text, context) &&
+                            handlePassword(passwordController.text, context)) {
+                          print("✅ Email valid, lanjutkan pendaftaran...");
+                          context.read<AuthBloc>().add(
+                            SignUpEvent(
+                              emailController.text,
+                              passwordController.text,
+                            ),
+                          );
+                        } else {
+                          print(
+                            "⚠️ Email tidak valid, hentikan pendaftaran...",
+                          );
+                          return;
+                        }
+                      },
+                      child: Text("Register"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<AuthBloc>().add(SignUpWithGoogleEvent());
+                        print("🚀 SignUp with Google event triggered");
+                      },
+                      child: Text("Sign Up with Google"),
+                    ),
+                  ],
                 );
               },
             ),

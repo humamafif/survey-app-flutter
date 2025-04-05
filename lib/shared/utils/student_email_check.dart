@@ -1,4 +1,4 @@
-import 'package:survey_app/core/app/app_export.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 bool isStudentEmail(String email, BuildContext context) {
   final regex = RegExp(r'^(\d{12})@student\.uin-malang\.ac\.id$');
