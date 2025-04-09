@@ -43,3 +43,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# API key files
+android/app/google-services.json
+ios/Runner/Info.plist
