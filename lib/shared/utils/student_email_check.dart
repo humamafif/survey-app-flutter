@@ -1,39 +1,28 @@
 import 'package:survey_app/core/app/app_exports.dart';
 
-bool isStudentEmail(String email, BuildContext context) {
+bool isValidStudentEmail(String email) {
   final regex = RegExp(r'^(\d{12})@student\.uin-malang\.ac\.id$');
 
-  // Hapus spasi yang tidak terlihat
   email = email.trim();
+  if (!regex.hasMatch(email)) return false;
 
-  if (email == "") {
+  String nim = regex.firstMatch(email)!.group(1)!;
+  if (nim.length != 12) return false;
+
+  String kodeProdi = nim.substring(2, 8);
+  return kodeProdi == "060511";
+}
+
+bool isStudentEmail(String email, BuildContext context) {
+  if (email.trim().isEmpty) {
     showSnackbar(context, "Email tidak boleh kosong!", Colors.red);
     return false;
   }
 
-  // Cek apakah format email sesuai
-  if (!regex.hasMatch(email)) {
-    showSnackbar(context, "Gunakan email student UIN!", Colors.red);
-    return false;
-  }
-
-  // Ambil bagian NIM dari email
-  String nim = regex.firstMatch(email)!.group(1)!;
-
-  // Cek apakah panjang NIM 12 digit
-  if (nim.length != 12) {
-    showSnackbar(context, "Gunakan email student UIN!", Colors.red);
-    return false;
-  }
-
-  // Ambil kode prodi (index ke-2 sampai ke-7)
-  String kodeProdi = nim.substring(2, 8);
-
-  // Validasi apakah kode prodi adalah "060511"
-  if (kodeProdi != "060511") {
+  if (!isValidStudentEmail(email)) {
     showSnackbar(
       context,
-      "Hanya prodi Teknik Informatika yang bisa mendaftar!",
+      "Gunakan email student UIN prodi Teknik Informatika!",
       Colors.red,
     );
     return false;

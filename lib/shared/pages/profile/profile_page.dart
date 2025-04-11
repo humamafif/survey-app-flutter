@@ -44,7 +44,10 @@ class ProfilePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               70.verticalSpace,
-              CircleAvatar(radius: 80, backgroundColor: Colors.grey),
+              CircleAvatar(
+                radius: 80,
+                backgroundImage: Image.network(user?.photoURL ?? "").image,
+              ),
               12.verticalSpace,
               Text("Username"),
               4.verticalSpace,
