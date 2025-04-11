@@ -13,12 +13,16 @@ class AuthFailure extends Failure {
         );
       case "invalid-email":
         return const AuthFailure("Format email tidak valid.");
+      case "invalid-student-email":
+        return const AuthFailure("Format email tidak valid.");
       case "wrong-password":
         return const AuthFailure("Password salah. Coba lagi.");
       case "user-not-found":
         return const AuthFailure("Email tidak terdaftar.");
       case "invalid-credential":
         return const AuthFailure("Email atau password salah. Coba lagi.");
+      case "network_error":
+        return const AuthFailure("Anda sedang offline.");
       default:
         return AuthFailure(
           "Terjadi kesalahan. Coba lagi nanti. ${code.toString()}",
