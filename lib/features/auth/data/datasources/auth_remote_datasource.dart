@@ -98,6 +98,7 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
       if (email == null || !isValidStudentEmail(email)) {
         await auth.signOut();
         await googleSignIn.signOut();
+        await auth.currentUser?.delete();
         throw FirebaseAuthException(
           code: 'invalid-student-email',
           message: e.toString(),

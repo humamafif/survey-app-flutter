@@ -20,7 +20,9 @@ class AuthFailure extends Failure {
       case "user-not-found":
         return const AuthFailure("Email tidak terdaftar.");
       case "invalid-credential":
-        return const AuthFailure("Email atau password salah. Coba lagi.");
+        return const AuthFailure(
+          "Email atau password salah atau belum terdaftar. Coba lagi.",
+        );
       case "network_error":
         return const AuthFailure("Anda sedang offline.");
       default:
