@@ -1,10 +1,8 @@
-enum AppRouteEnum { splashScreen, home, profile, login, register, surveyForm }
+enum AppRouteEnum { home, profile, login, register, surveyForm }
 
 extension AppRouteExtension on AppRouteEnum {
   String get name {
     switch (this) {
-      case AppRouteEnum.splashScreen:
-        return '/';
       case AppRouteEnum.home:
         return '/home';
       case AppRouteEnum.profile:
@@ -20,8 +18,6 @@ extension AppRouteExtension on AppRouteEnum {
 
   String get path {
     switch (this) {
-      case AppRouteEnum.splashScreen:
-        return '/splash-screen';
       case AppRouteEnum.home:
         return '/home';
       case AppRouteEnum.profile:
