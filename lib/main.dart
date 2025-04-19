@@ -1,9 +1,15 @@
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:survey_app/core/app/app_exports.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: WidgetsBinding.instance);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await initServiceLocator();
+  Future.delayed(
+    const Duration(seconds: 2),
+    () => FlutterNativeSplash.remove(),
+  );
   runApp(SurveyApp());
 }
 
@@ -13,7 +19,11 @@ class SurveyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<AuthBloc>(create: (context) => sl<AuthBloc>())],
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => sl<AuthBloc>()..add(CheckAuthEvent()),
+        ),
+      ],
       child: ScreenUtilInit(
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

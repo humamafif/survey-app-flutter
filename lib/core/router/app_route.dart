@@ -35,7 +35,7 @@ class AppRouter {
 
   static GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: AppRouteEnum.splashScreen.path,
+    initialLocation: AppRouteEnum.home.path,
     debugLogDiagnostics: true,
     routes: [
       /*
@@ -46,14 +46,6 @@ class AppRouter {
           builder: (context, state) => MyPage()
         )        
       */
-      GoRoute(
-        parentNavigatorKey: _rootNavigatorKey,
-        path: AppRouteEnum.splashScreen.path,
-        name: AppRouteEnum.splashScreen.name,
-        builder:
-            (context, state) =>
-                SplashScreen(), //TODO Change Page (splashScreen)!
-      ),
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
         path: AppRouteEnum.login.path,

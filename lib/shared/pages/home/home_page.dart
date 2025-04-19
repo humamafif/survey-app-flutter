@@ -13,6 +13,9 @@ class HomePage extends StatelessWidget {
           if (state is Unauthenticated) {
             print("STATE: $state");
             context.goNamed("/login");
+          } else if (state is Authenticated) {
+            print("STATE: $state");
+            return;
           }
         },
         child: BlocBuilder<AuthBloc, AuthState>(
