@@ -6,36 +6,6 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, UserEntity>> signIn(
-    String email,
-    String password,
-  ) async {
-    try {
-      final user = await remoteDataSource.signIn(email, password);
-      return Right(user);
-    } on FirebaseAuthException catch (e) {
-      return Left(AuthFailure.fromCode(e.code));
-    } catch (e) {
-      return Left(ServerFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, UserEntity>> signUp(
-    String email,
-    String password,
-  ) async {
-    try {
-      final user = await remoteDataSource.signUp(email, password);
-      return Right(user);
-    } on FirebaseAuthException catch (e) {
-      return Left(AuthFailure.fromCode(e.code));
-    } catch (e) {
-      return Left(ServerFailure());
-    }
-  }
-
-  @override
   Future<Either<Failure, void>> signOut() async {
     try {
       await remoteDataSource.signOut();
@@ -58,19 +28,6 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(ServerFailure());
     }
   }
-
-  @override
-  Future<Either<Failure, UserEntity>> signUpWithGoogle() async {
-    try {
-      final user = await remoteDataSource.signUpWithGoogle();
-      return Right(user);
-    } on FirebaseAuthException catch (e) {
-      return Left(AuthFailure.fromCode(e.code));
-    } catch (e) {
-      return Left(ServerFailure("Unexpected error: ${e.toString()}"));
-    }
-  }
-
   @override
   Future<Either<Failure, UserEntity>> signInWithGoogle() async {
     try {

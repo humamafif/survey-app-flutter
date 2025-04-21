@@ -10,24 +10,12 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     print("📱 LOGIN PAGE");
     return Scaffold(
-      appBar: AppBar(title: Text("Login Page")),
+      backgroundColor: AppColor.backgroundColor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomTextField(
-              labelText: "Email",
-              hintText: "ex: 220605@student.uin-malang.ac.id",
-              controller: emailController,
-            ),
-            12.verticalSpace,
-            CustomTextField(
-              labelText: "Password",
-              hintText: "min 8 character",
-              isPassword: true,
-              controller: passwordController,
-            ),
-            12.verticalSpace,
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state is AuthFailureState) {
@@ -43,55 +31,55 @@ class LoginPage extends StatelessWidget {
                 if (state is AuthLoading) {
                   return Center(child: CircularProgressIndicator());
                 }
-                return SizedBox(
+                return Container(
+                  padding: const EdgeInsets.all(12),
                   width: double.infinity,
                   child: Column(
                     children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey,
-                          foregroundColor: Colors.white,
+                      Text(
+                        "Selamat Datang \ndi Survey App Program Studi Teknik Informatika",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 32.sp,
+
+                          fontWeight: FontWeight.w500,
                         ),
-                        onPressed: () {
-                          if (isStudentEmail(emailController.text, context) &&
-                              handlePassword(
-                                passwordController.text,
-                                context,
-                              )) {
-                            print("🚀 Login!");
-                            context.read<AuthBloc>().add(
-                              SignInEvent(
-                                emailController.text,
-                                passwordController.text,
-                              ),
-                            );
-                          }
-                        },
-                        child: Text("Sign In"),
                       ),
+                      8.verticalSpace,
                       ElevatedButton(
                         onPressed: () {
                           print("🚀 SignInWithGoogleEvent!");
                           context.read<AuthBloc>().add(SignInWithGoogleEvent());
                         },
-                        child: Text("Sign In with Google"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey.shade50,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.sp),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/images/logo/logo_uin.png",
+                                width: 24.sp,
+                                height: 24.sp,
+                              ),
+                              8.horizontalSpace,
+                              Text(
+                                "SIGN IN WITH STUDENT ACCOUNT",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 );
               },
-            ),
-
-            Row(
-              children: [
-                Text("Belum punya akun?"),
-                TextButton(
-                  onPressed: () {
-                    context.pushNamed("/register");
-                  },
-                  child: Text("Sign Up"),
-                ),
-              ],
             ),
           ],
         ),

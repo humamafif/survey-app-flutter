@@ -13,10 +13,10 @@ class CustomCarousel extends StatelessWidget {
         enlargeCenterPage: true,
       ),
       items:
-          [1, 2, 3, 4, 5].map((i) {
+          [1, 2, 3].map((i) {
             return Builder(
               builder: (BuildContext context) {
-                return CustomCardCarousel();
+                return CustomCardCarousel(index: i);
               },
             );
           }).toList(),

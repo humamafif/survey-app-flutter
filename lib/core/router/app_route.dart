@@ -52,13 +52,6 @@ class AppRouter {
         name: AppRouteEnum.login.name,
         builder: (context, state) => LoginPage(), //TODO Change Page (login)!
       ),
-      GoRoute(
-        parentNavigatorKey: _rootNavigatorKey,
-        path: AppRouteEnum.register.path,
-        name: AppRouteEnum.register.name,
-        builder:
-            (context, state) => RegisterPage(), //TODO Change Page (register)!
-      ),
       // GoRoute(
       //   parentNavigatorKey: _rootNavigatorKey,
       //   path: AppRouteEnum.surveyForm.path,
