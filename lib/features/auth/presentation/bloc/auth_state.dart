@@ -24,15 +24,6 @@ class LoginSuccess extends AuthState {
   List<Object> get props => [user];
 }
 
-// ✅ State Sukses Register
-class RegisterSuccess extends AuthState {
-  final String message;
-  RegisterSuccess({required this.message});
-
-  @override
-  List<Object> get props => [message];
-}
-
 // ✅ State Authenticated (User Sudah Login)
 class Authenticated extends AuthState {
   final UserEntity user;

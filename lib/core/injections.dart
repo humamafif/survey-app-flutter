@@ -20,21 +20,16 @@ Future<void> initServiceLocator() async {
   );
 
   // Use cases (pastikan ini sebelum AuthBloc)
-  sl.registerLazySingleton(() => SigninUsecase(repository: sl()));
-  sl.registerLazySingleton(() => SignupUsecase(repository: sl()));
+
   sl.registerLazySingleton(() => SignoutUsecase(repository: sl()));
-  sl.registerLazySingleton(() => SignupWithGoogleUsecase(repository: sl()));
   sl.registerLazySingleton(() => SigninWithGoogleUsecase(repository: sl()));
   sl.registerLazySingleton(() => CheckAuthUsecase(repository: sl()));
 
   // Bloc
   sl.registerLazySingleton(
     () => AuthBloc(
-      signInUseCase: sl(),
-      signUpUseCase: sl(),
       signOutUseCase: sl(),
       checkAuthUsecase: sl(),
-      signUpWithGoogleUsecase: sl(),
       signInWithGoogleUsecase: sl(),
     ),
   );

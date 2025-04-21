@@ -1,9 +1,9 @@
 import 'package:survey_app/core/app/app_exports.dart';
 
 class UserModel extends UserEntity {
-  const UserModel({required super.uid, super.email});
+  const UserModel({required super.uid, super.email, super.name});
 
-  factory UserModel.fromFirebase(dynamic user) {
-    return UserModel(uid: user.uid, email: user.email);
+  factory UserModel.fromFirebase(User user) {
+    return UserModel(uid: user.uid, email: user.email, name: user.displayName);
   }
 }
