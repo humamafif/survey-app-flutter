@@ -1,4 +1,5 @@
 import 'package:survey_app/core/app/app_exports.dart';
+import 'package:survey_app/features/dosens/presentation/widgets/dropdown_dosen_widget.dart';
 
 class SurveyPage extends StatelessWidget {
   const SurveyPage({super.key});
@@ -24,6 +25,7 @@ class SurveyPage extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
+                DropdownDosenWidget(),
                 RadioButton(question: "why earth circular?"),
                 RadioButton(question: "why earth circular?"),
                 RadioButton(question: "why earth circular?"),
