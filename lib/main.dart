@@ -1,5 +1,6 @@
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:survey_app/core/app/app_exports.dart';
+import 'package:survey_app/features/dosens/presentation/bloc/dosens_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,9 @@ class SurveyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(
           create: (context) => sl<AuthBloc>()..add(CheckAuthEvent()),
+        ),
+        BlocProvider<DosensBloc>(
+          create: (context) => sl<DosensBloc>()..add(GetAllDosensEvent()),
         ),
       ],
       child: ScreenUtilInit(

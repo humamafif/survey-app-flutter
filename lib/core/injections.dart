@@ -1,8 +1,23 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:survey_app/core/app/app_exports.dart';
+import 'package:survey_app/features/dosens/data/datasources/dosen_remote_datasource.dart';
+import 'package:survey_app/features/dosens/data/repositories/dosen_repo_impl.dart';
+import 'package:survey_app/features/dosens/domain/repositories/dosen_repository.dart';
+import 'package:survey_app/features/dosens/domain/usecases/get_all_dosen_usecase.dart';
+import 'package:survey_app/features/dosens/domain/usecases/get_dosen_by_id_usecase.dart';
+import 'package:survey_app/features/dosens/domain/usecases/get_dosen_byname_usecase.dart';
+import 'package:survey_app/features/dosens/presentation/bloc/dosens_bloc.dart';
 
 var sl = GetIt.instance;
 
 Future<void> initServiceLocator() async {
+  // ENV
+  await dotenv.load(fileName: ".env");
+
+  sl.registerLazySingleton(
+    () => Dio(BaseOptions(baseUrl: dotenv.env['BASE_URL']!)),
+  );
   // FIREBASE
   sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
 
@@ -33,4 +48,17 @@ Future<void> initServiceLocator() async {
       signInWithGoogleUsecase: sl(),
     ),
   );
+
+  // dosen
+  sl.registerLazySingleton<DosenRemoteDatasource>(
+    () => DosenRemoteDatasourceImpl(dio: sl()),
+  );
+  sl.registerLazySingleton<DosenRepository>(
+    () => DosenRepoImpl(dosenRemoteDatasource: sl()),
+  );
+  sl.registerLazySingleton(() => GetAllDosenUsecase(sl()));
+  sl.registerLazySingleton(() => GetDosenByIdUsecase(sl()));
+  sl.registerLazySingleton(() => GetDosenBynameUsecase(sl()));
+
+  sl.registerLazySingleton(() => DosensBloc(sl()));
 }
