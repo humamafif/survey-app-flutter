@@ -12,6 +12,14 @@ class DropdownDosenWidget extends StatefulWidget {
 
 class _DropdownDosenWidgetState extends State<DropdownDosenWidget> {
   DosenEntity? _selectedDosen;
+  @override
+  initState() {
+    super.initState();
+    final state = context.read<DosensBloc>().state;
+    if (state is DosensLoadedGetAllState) {
+      loadSelectedDosenFromPrefs(state.dosens.cast<DosenEntity>());
+    }
+  }
 
   Future<void> loadSelectedDosenFromPrefs(List<DosenEntity> dosens) async {
     final selected = await loadSelectedDosen(dosens);
@@ -36,12 +44,38 @@ class _DropdownDosenWidgetState extends State<DropdownDosenWidget> {
       child: BlocBuilder<DosensBloc, DosensState>(
         builder: (context, state) {
           if (state is DosensLoadingState) {
-            return const Center(child: CircularProgressIndicator());
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    DropdownButton<DosenEntity>(
+                      hint: const Text('Pilih Dosen'),
+                      value: _selectedDosen,
+                      isExpanded: true,
+                      menuMaxHeight: 0.5.sh,
+                      items: [
+                        DropdownMenuItem<DosenEntity>(
+                          value: null,
+                          child: Row(
+                            children: const [
+                              CircularProgressIndicator(),
+                              SizedBox(width: 10),
+                              Text("Memuat data..."),
+                            ],
+                          ),
+                        ),
+                      ],
+                      onChanged: null,
+                    ),
+                  ],
+                ),
+              ),
+            );
           } else if (state is DosensErrorState) {
             return Center(child: Text(state.message));
           } else if (state is DosensLoadedGetAllState) {
             final dosens = state.dosens;
-
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -78,7 +112,9 @@ class _DropdownDosenWidgetState extends State<DropdownDosenWidget> {
               ),
             );
           } else {
-            return const Center(child: Text('Tidak ada data dosen.'));
+            return const Center(
+              child: Text('Tidak ada data dosen.'),
+            ); // Tampilkan jika tidak ada data
           }
         },
       ),
