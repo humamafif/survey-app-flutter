@@ -12,12 +12,12 @@ class ProfilePage extends StatelessWidget {
             content: Text("Apakah Anda yakin ingin keluar?"),
             actions: [
               TextButton(
-                onPressed: () => Navigator.pop(context), // Tutup dialog
+                onPressed: () => Navigator.pop(context),
                 child: Text("Batal"),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context); // Tutup dialog sebelum logout
+                  Navigator.pop(context);
                   context.read<AuthBloc>().add(SignOutEvent());
                 },
                 child: Text("Ya"),
@@ -49,14 +49,12 @@ class ProfilePage extends StatelessWidget {
                 backgroundImage: Image.network(user?.photoURL ?? "").image,
               ),
               12.verticalSpace,
-              Text("Username"),
+              Text(user?.displayName ?? "No name"),
+              Text(user?.uid ?? "No name"),
               4.verticalSpace,
               Text(user?.email ?? "No email"),
               ElevatedButton(
-                onPressed:
-                    () => _showLogoutDialog(
-                      context,
-                    ), // Tampilkan dialog konfirmasi
+                onPressed: () => _showLogoutDialog(context),
                 child: Text("Logout"),
               ),
             ],
