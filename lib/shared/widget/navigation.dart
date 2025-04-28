@@ -16,7 +16,6 @@ class NavigationPage extends StatefulWidget {
 class _NavigationPageState extends State<NavigationPage> {
   int selectedIndex = 0;
 
-  //function to change page in Navigation Page
   void goToBranch(int index) {
     widget.navigationShell.goBranch(
       index,
@@ -27,7 +26,7 @@ class _NavigationPageState extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColor.backgroundColor,
       body: widget.navigationShell,
       bottomNavigationBar: NavigationBarWidget(
         navigationShell: widget.navigationShell,

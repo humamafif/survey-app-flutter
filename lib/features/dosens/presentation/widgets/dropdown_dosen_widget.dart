@@ -112,9 +112,7 @@ class _DropdownDosenWidgetState extends State<DropdownDosenWidget> {
               ),
             );
           } else {
-            return const Center(
-              child: Text('Tidak ada data dosen.'),
-            ); // Tampilkan jika tidak ada data
+            return const Center(child: Text('Tidak ada data dosen.'));
           }
         },
       ),

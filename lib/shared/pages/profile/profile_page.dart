@@ -39,24 +39,29 @@ class ProfilePage extends StatelessWidget {
         }
       },
       child: Scaffold(
+        backgroundColor: AppColor.backgroundColor,
+        appBar: AppBar(
+          backgroundColor: AppColor.backgroundColor,
+          title: Text("Profile"),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () => _showLogoutDialog(context),
+            ),
+          ],
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              70.verticalSpace,
+              10.verticalSpace,
               CircleAvatar(
                 radius: 80,
                 backgroundImage: Image.network(user?.photoURL ?? "").image,
               ),
               12.verticalSpace,
               Text(user?.displayName ?? "No name"),
-              Text(user?.uid ?? "No name"),
               4.verticalSpace,
-              Text(user?.email ?? "No email"),
-              ElevatedButton(
-                onPressed: () => _showLogoutDialog(context),
-                child: Text("Logout"),
-              ),
             ],
           ),
         ),
