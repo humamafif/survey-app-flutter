@@ -27,20 +27,31 @@ class NavigationBarWidget extends StatelessWidget {
       ),
       child: BottomNavigationBar(
         iconSize: 28,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: AppColor.black,
         unselectedItemColor: Colors.grey,
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColor.backgroundColor,
         currentIndex: currentIndex,
-        selectedLabelStyle: const TextStyle(fontSize: 12),
+        selectedLabelStyle: const TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.bold,
+         ),
         unselectedLabelStyle: const TextStyle(fontSize: 12),
         onTap: (index) {
           goToBranch(index);
         },
         items: [
-          _bottomNavbarItem(Icon(Icons.home), currentIndex == 0, 'Home'),
-          _bottomNavbarItem(Icon(Icons.person), currentIndex == 1, 'Profile'),
+          _bottomNavbarItem(
+            Icon(Icons.home_outlined),
+            currentIndex == 0,
+            'Home',
+          ),
+          _bottomNavbarItem(
+            Icon(Icons.person_outline),
+            currentIndex == 1,
+            'Profile',
+          ),
         ],
       ),
     );

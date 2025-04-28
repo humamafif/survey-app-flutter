@@ -15,7 +15,7 @@ bool isValidStudentEmail(String email) {
 
 bool isStudentEmail(String email, BuildContext context) {
   if (email.trim().isEmpty) {
-    showSnackbar(context, "Email tidak boleh kosong!", Colors.red);
+    showSnackbar(context, "Email tidak boleh kosong!", AppColor.red);
     return false;
   }
 
@@ -23,7 +23,7 @@ bool isStudentEmail(String email, BuildContext context) {
     showSnackbar(
       context,
       "Gunakan email student UIN prodi Teknik Informatika!",
-      Colors.red,
+      AppColor.red,
     );
     return false;
   }

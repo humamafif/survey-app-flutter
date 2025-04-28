@@ -20,10 +20,10 @@ class LoginPage extends StatelessWidget {
               listener: (context, state) {
                 if (state is AuthFailureState) {
                   print("STATE: $state");
-                  showSnackbar(context, state.message, AppColor.errorColor);
+                  showSnackbar(context, state.message, AppColor.red);
                 } else if (state is LoginSuccess) {
                   print("STATE: $state");
-                  showSnackbar(context, state.message, AppColor.successColor);
+                  showSnackbar(context, state.message, AppColor.ligthGreen);
                   Future.microtask(() => context.go("/home"));
                 }
               },
@@ -70,7 +70,7 @@ class LoginPage extends StatelessWidget {
                               8.horizontalSpace,
                               Text(
                                 "SIGN IN WITH STUDENT ACCOUNT",
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(color: AppColor.black),
                               ),
                             ],
                           ),

@@ -39,7 +39,11 @@ class HomePage extends StatelessWidget {
 
   Widget _buildHomeContent(String email) {
     return Scaffold(
-      appBar: AppBar(title: Text("Halo, $email!")),
+      backgroundColor: AppColor.backgroundColor,
+      appBar: AppBar(
+        title: Text("Halo, $email!"),
+        backgroundColor: AppColor.backgroundColor,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
@@ -50,14 +54,14 @@ class HomePage extends StatelessWidget {
             Text('Survey'),
             12.verticalSpace,
             CustomCardSurvey(
-              color: Colors.greenAccent,
+              color: Colors.green,
               imagePath: "assets/icons/icon paper.png",
               routeName: '/survey-form',
               title: "Survey Kepuasan Matakuliah",
             ),
             12.verticalSpace,
             CustomCardSurvey(
-              color: Colors.redAccent,
+              color: Colors.yellow,
               imagePath: "assets/icons/icon paper.png",
               routeName: '/survey-form',
               title: "Survey Kepuasan Kinerja Dosen",
