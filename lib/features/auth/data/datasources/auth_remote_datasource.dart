@@ -1,19 +1,27 @@
 import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:survey_app/core/app/app_exports.dart';
 
 abstract class AuthRemoteDatasource {
   Future<void> signOut();
   Future<UserModel?> getCurrent();
   Future<UserModel> signInWithGoogle();
+  Future<void> saveUserData(UserModel user);
 }
 
 class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
   final FirebaseAuth auth;
   final GoogleSignIn googleSignIn;
+  final Dio dio;
 
-  AuthRemoteDatasourceImpl({required this.auth, required this.googleSignIn});
+  AuthRemoteDatasourceImpl({
+    required this.dio,
+    required this.auth,
+    required this.googleSignIn,
+  });
   @override
   Future<void> signOut() async {
     await auth.signOut();
@@ -63,6 +71,12 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
           message: e.toString(),
         );
       }
+      print("SIGN IN");
+      print(UserModel.fromFirebase(user).toJson());
+
+      await saveUserData(
+        UserModel(uid: user.uid, email: user.email, name: user.displayName),
+      );
       return UserModel.fromFirebase(user);
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code, message: e.message);
@@ -75,4 +89,30 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
       throw FirebaseAuthException(code: e.toString(), message: e.toString());
     }
   }
+
+  @override
+  Future<void> saveUserData(UserModel user) async {
+    try {
+      final response = await dio.post(
+        '${dotenv.env['BASE_URL']}/users',
+        data: user.toJson(),
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      print('DATA: ${user.toJson()}');
+
+      if (response.statusCode != 201) {
+        throw Exception('Failed to save user data');
+      }
+    } on DioException catch (e) {
+      throw Exception('Failed to save user data: ${e.message}');
+    } catch (e) {
+      throw Exception("Failed to save data user: $e");
+    }
+  }
 }
+  

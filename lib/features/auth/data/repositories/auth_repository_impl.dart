@@ -28,6 +28,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(ServerFailure());
     }
   }
+
   @override
   Future<Either<Failure, UserEntity>> signInWithGoogle() async {
     try {
