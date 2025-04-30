@@ -26,7 +26,7 @@ Future<void> initServiceLocator() async {
 
   // Data sources
   sl.registerLazySingleton<AuthRemoteDatasource>(
-    () => AuthRemoteDatasourceImpl(auth: sl(), googleSignIn: sl()),
+    () => AuthRemoteDatasourceImpl(auth: sl(), googleSignIn: sl(), dio: sl()),
   );
 
   // Repository
