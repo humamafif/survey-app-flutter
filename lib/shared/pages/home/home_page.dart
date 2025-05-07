@@ -6,67 +6,75 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("📱 HOME PAGE");
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is Unauthenticated) {
-          print("STATE: $state");
           context.goNamed("/login");
-        } else if (state is Authenticated) {
-          print("STATE: $state");
-          return;
         }
       },
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
-          print("State : $state");
           if (state is AuthLoading) {
-            print("STATE: $state");
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+              child: CircularProgressIndicator(color: AppColor.primaryColor),
+            );
           }
 
           if (state is Authenticated) {
-            print("STATE: $state");
             return _buildHomeContent(firstName(state.user.name ?? "User"));
           } else {
-            print("STATE: $state");
-            return const Center(child: Text("User tidak terautentikasi"));
+            return Center(
+              child: Text(
+                "User tidak terautentikasi",
+                style: AppTextStyles.bodyLarge,
+              ),
+            );
           }
         },
       ),
     );
   }
 
-  Widget _buildHomeContent(String email) {
+  Widget _buildHomeContent(String name) {
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       appBar: AppBar(
-        title: Text("Halo, $email!"),
+        title: Text("Halo, $name!", style: AppTextStyles.h2),
+        centerTitle: false,
         backgroundColor: AppColor.backgroundColor,
+        elevation: 0,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomCarousel(),
-            12.verticalSpace,
-            Text('Survey'),
-            12.verticalSpace,
-            CustomCardSurvey(
-              color: Colors.green,
-              imagePath: "assets/icons/icon paper.png",
-              routeName: '/survey-form',
-              title: "Survey Kepuasan Matakuliah",
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomCarousel(),
+                12.verticalSpace,
+                Text(
+                  'Survey',
+                  style: AppTextStyles.h3.copyWith(color: AppColor.textPrimary),
+                ),
+                16.verticalSpace,
+                CustomCardSurvey(
+                  color: AppColor.accentMint,
+                  imagePath: "assets/icons/icon paper.png",
+                  routeName: '/survey-form',
+                  title: "Survey Kepuasan Matakuliah",
+                ),
+                16.verticalSpace,
+                CustomCardSurvey(
+                  color: AppColor.accentPeach,
+                  imagePath: "assets/icons/icon paper.png",
+                  routeName: '/survey-form',
+                  title: "Survey Kepuasan Kinerja Dosen",
+                ),
+              ],
             ),
-            12.verticalSpace,
-            CustomCardSurvey(
-              color: Colors.yellow,
-              imagePath: "assets/icons/icon paper.png",
-              routeName: '/survey-form',
-              title: "Survey Kepuasan Kinerja Dosen",
-            ),
-          ],
+          ),
         ),
       ),
     );
