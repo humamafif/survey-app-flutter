@@ -14,16 +14,16 @@ class RadioButtonState extends State<RadioButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsets.all(16),
+      margin: EdgeInsets.symmetric(vertical: 8.h),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: AppColor.backgroundColor,
-        borderRadius: BorderRadius.circular(10),
+        color: AppColor.surfaceColor,
+        borderRadius: BorderRadius.circular(10.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: AppColor.primaryColor.withOpacity(0.1),
             blurRadius: 10,
-            spreadRadius: 2,
+            spreadRadius: 0,
             offset: const Offset(0, 3),
           ),
         ],
@@ -32,15 +32,8 @@ class RadioButtonState extends State<RadioButton> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.question,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          const SizedBox(height: 10),
+          Text(widget.question, style: AppTextStyles.h3),
+          SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(5, (index) {
@@ -58,13 +51,10 @@ class RadioButtonState extends State<RadioButton> {
                         print(value);
                         print(widget.question);
                       },
-                      activeColor: Colors.green,
+                      activeColor: AppColor.primaryColor,
                       visualDensity: VisualDensity.compact,
                     ),
-                    Text(
-                      "${index + 1}",
-                      style: const TextStyle(color: Colors.black, fontSize: 14),
-                    ),
+                    Text("${index + 1}", style: AppTextStyles.bodySmall),
                   ],
                 ),
               );

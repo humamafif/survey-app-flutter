@@ -16,28 +16,30 @@ class NavigationBarWidget extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
+        color: AppColor.surfaceColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 2,
-            spreadRadius: 1,
-            offset: const Offset(0, 2),
+            color: AppColor.primaryColor.withOpacity(0.1),
+            blurRadius: 4,
+            spreadRadius: 0,
+            offset: const Offset(0, -1),
           ),
         ],
       ),
       child: BottomNavigationBar(
-        iconSize: 28,
-        selectedItemColor: AppColor.black,
-        unselectedItemColor: Colors.grey,
+        iconSize: 24.sp,
+        selectedItemColor: AppColor.primaryColor,
+        unselectedItemColor: AppColor.textDisabled,
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        backgroundColor: AppColor.backgroundColor,
+        backgroundColor: AppColor.surfaceColor,
         currentIndex: currentIndex,
-        selectedLabelStyle: const TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.bold,
-         ),
-        unselectedLabelStyle: const TextStyle(fontSize: 12),
+        elevation: 0,
+        selectedLabelStyle: TextStyle(
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w600,
+        ),
+        unselectedLabelStyle: TextStyle(fontSize: 11.sp),
         onTap: (index) {
           goToBranch(index);
         },

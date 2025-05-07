@@ -8,13 +8,21 @@ class CustomCardCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(horizontal: 5.0),
+      margin: EdgeInsets.symmetric(horizontal: 2.w),
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/banner/banner $index.png'),
-        fit: BoxFit.fill,
+          fit: BoxFit.fill,
         ),
-        borderRadius: BorderRadius.circular(13.0),
+        borderRadius: BorderRadius.circular(13.r),
+        boxShadow: [
+          BoxShadow(
+            color: AppColor.primaryColor.withOpacity(0.2),
+            blurRadius: 8,
+            spreadRadius: 1,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
     );
   }

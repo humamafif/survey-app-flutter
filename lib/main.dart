@@ -11,7 +11,7 @@ Future<void> main() async {
     const Duration(seconds: 2),
     () => FlutterNativeSplash.remove(),
   );
-  runApp(SurveyApp());
+  runApp(const SurveyApp());
 }
 
 class SurveyApp extends StatelessWidget {
@@ -29,12 +29,17 @@ class SurveyApp extends StatelessWidget {
         ),
       ],
       child: ScreenUtilInit(
-        child: MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          title: 'Survey App',
-          theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme()),
-          routerConfig: AppRouter.router,
-        ),
+        designSize: const Size(375, 812),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: 'Survey App',
+            theme: AppTheme.lightTheme,
+            routerConfig: AppRouter.router,
+          );
+        },
       ),
     );
   }
