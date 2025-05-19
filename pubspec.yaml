@@ -93,7 +93,7 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 flutter_native_splash:
   color: "#ffffff"
-  color_dark: "#000000"
+  color_dark: "#ffffff"
   image: assets/images/logo/logo_uin.png
   image_dark: assets/images/logo/logo_uin.png
   android_gravity: center
