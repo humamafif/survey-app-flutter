@@ -109,10 +109,11 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
         throw Exception('Failed to save user data');
       }
     } on DioException catch (e) {
-      throw Exception('Failed to save user data: ${e.message}');
+      // throw Exception('Failed to save user data: ${e}');
+      print('⚠️ Failed to save user data: ${e}');
+      return;
     } catch (e) {
       throw Exception("Failed to save data user: $e");
     }
   }
 }
-  
