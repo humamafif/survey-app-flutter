@@ -8,6 +8,19 @@ import 'package:survey_app/features/dosens/domain/usecases/get_all_dosen_usecase
 import 'package:survey_app/features/dosens/domain/usecases/get_dosen_by_id_usecase.dart';
 import 'package:survey_app/features/dosens/domain/usecases/get_dosen_byname_usecase.dart';
 import 'package:survey_app/features/dosens/presentation/bloc/dosens_bloc.dart';
+import 'package:survey_app/features/mata_kuliah/data/datasources/mata_kuliah_data_source.dart';
+import 'package:survey_app/features/mata_kuliah/data/repositories/mata_kuliah_repository_impl.dart';
+import 'package:survey_app/features/mata_kuliah/domain/repositories/mata_kuliah_repository.dart';
+import 'package:survey_app/features/mata_kuliah/domain/usecases/get_all_mata_kuliah_usecase.dart';
+import 'package:survey_app/features/mata_kuliah/domain/usecases/get_mata_kuliah_by_dosen_id_usecase.dart';
+import 'package:survey_app/features/mata_kuliah/domain/usecases/get_mata_kuliah_by_id_usecase.dart';
+import 'package:survey_app/features/mata_kuliah/presentation/bloc/mata_kuliah_bloc.dart';
+import 'package:survey_app/features/questions/data/datasources/question_remote_datasource.dart';
+import 'package:survey_app/features/questions/data/repositories/question_repository_impl.dart';
+import 'package:survey_app/features/questions/domain/repositories/question_repository.dart';
+import 'package:survey_app/features/questions/domain/usecases/get_all_question_usecase.dart';
+import 'package:survey_app/features/questions/domain/usecases/get_question_by_survey_id_usecase.dart';
+import 'package:survey_app/features/questions/presentation/bloc/questions_bloc.dart';
 
 var sl = GetIt.instance;
 
@@ -34,8 +47,7 @@ Future<void> initServiceLocator() async {
     () => AuthRepositoryImpl(remoteDataSource: sl()),
   );
 
-  // Use cases (pastikan ini sebelum AuthBloc)
-
+  // Use cases
   sl.registerLazySingleton(() => SignoutUsecase(repository: sl()));
   sl.registerLazySingleton(() => SigninWithGoogleUsecase(repository: sl()));
   sl.registerLazySingleton(() => CheckAuthUsecase(repository: sl()));
@@ -61,4 +73,52 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton(() => GetDosenBynameUsecase(sl()));
 
   sl.registerLazySingleton(() => DosensBloc(sl()));
+
+  // Mata Kuliah Feature
+  // Data sources
+  sl.registerLazySingleton<MataKuliahRemoteDataSource>(
+    () => MataKuliahRemoteDataSourceImpl(dio: sl()),
+  );
+
+  // Repositories
+  sl.registerLazySingleton<MataKuliahRepository>(
+    () => MataKuliahRepositoryImpl(remoteDataSource: sl()),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => GetAllMataKuliahUsecase(sl()));
+  sl.registerLazySingleton(() => GetMataKuliahByIdUsecase(sl()));
+  sl.registerLazySingleton(() => GetMataKuliahByDosenIdUsecase(sl()));
+
+  // BLoC
+  sl.registerFactory(
+    () => MataKuliahBloc(
+      getAllMataKuliahUsecase: sl(),
+      getMataKuliahByIdUsecase: sl(),
+      getMataKuliahByDosenIdUsecase: sl(),
+    ),
+  );
+
+  // Questions Feature
+  // Data sources
+  sl.registerLazySingleton<QuestionRemoteDataSource>(
+    () => QuestionRemoteDataSourceImpl(dio: sl()),
+  );
+
+  // Repositories
+  sl.registerLazySingleton<QuestionRepository>(
+    () => QuestionRepositoryImpl(remoteDataSource: sl()),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => GetAllQuestionsUsecase(sl()));
+  sl.registerLazySingleton(() => GetQuestionsBySurveyIdUsecase(sl()));
+
+  // BLoC
+  sl.registerFactory(
+    () => QuestionsBloc(
+      getAllQuestionsUsecase: sl(),
+      getQuestionsBySurveyIdUsecase: sl(),
+    ),
+  );
 }

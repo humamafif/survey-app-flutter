@@ -1,4 +1,6 @@
 import 'package:survey_app/core/app/app_exports.dart';
+import 'package:survey_app/features/mata_kuliah/presentation/pages/select_mata_kuliah_dosen_page.dart';
+import 'package:survey_app/features/questions/presentation/pages/questions_list_page.dart';
 
 /*
 Example Use of Go_Router:
@@ -88,9 +90,59 @@ class AppRouter {
                 routes: [
                   GoRoute(
                     parentNavigatorKey: _rootNavigatorKey,
-                    path: AppRouteEnum.surveyForm.path,
-                    name: AppRouteEnum.surveyForm.name,
-                    builder: (context, state) => SurveyPage(),
+                    path: AppRouteEnum.selectMataKuliahDosen.path,
+                    name: AppRouteEnum.selectMataKuliahDosen.name,
+                    builder: (context, state) => SelectMataKuliahDosenPage(),
+                    pageBuilder:
+                        (context, state) => NoTransitionPage(
+                          child: SelectMataKuliahDosenPage(),
+                        ),
+                    routes: [
+                      GoRoute(
+                        parentNavigatorKey: _rootNavigatorKey,
+                        path: AppRouteEnum.questionPage.path,
+                        name: AppRouteEnum.questionPage.name,
+                        builder: (context, state) {
+                          final dosenId = int.tryParse(
+                            state.uri.queryParameters['dosenId'] ?? '',
+                          );
+                          final matakuliahId = int.tryParse(
+                            state.uri.queryParameters['matakuliahId'] ?? '',
+                          );
+                          return QuestionsListPage(
+                            dosenId: dosenId!,
+                            matakuliahId: matakuliahId!,
+                          );
+                        },
+                      ),
+                      // GoRoute(
+                      //   parentNavigatorKey: _rootNavigatorKey,
+                      //   path: 'survey-form', // Path sederhana tanpa parameter
+                      //   name: AppRouteEnum.surveyForm.name,
+                      //   builder: (context, state) {
+                      //     // Akses parameter dari state.queryParameters
+                      //     final dosenId = state.uri.queryParameters['dosenId'];
+                      //     final mataKuliahId =
+                      //         state.uri.queryParameters['mataKuliahId'];
+
+                      //     return SurveyPage(
+                      //       dosenId: dosenId,
+                      //       mataKuliahId: mataKuliahId,
+                      //     );
+                      //   },
+                      //   pageBuilder:
+                      //       (context, state) => NoTransitionPage(
+                      //         child: SurveyPage(
+                      //           dosenId: state.uri.queryParameters['dosenId'],
+                      //           mataKuliahId:
+                      //               state.uri.queryParameters['mataKuliahId'],
+                      //         ),
+                      //       ),
+                      //   routes: [
+
+                      //   ],
+                      // ),
+                    ],
                   ),
                   // GoRoute(
                   //   parentNavigatorKey: _rootNavigatorKey,
