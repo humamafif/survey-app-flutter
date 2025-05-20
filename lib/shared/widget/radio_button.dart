@@ -1,3 +1,4 @@
+// Radio Button Widget
 import 'package:survey_app/core/app/app_exports.dart';
 
 class RadioButton extends StatefulWidget {
@@ -32,7 +33,12 @@ class RadioButtonState extends State<RadioButton> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.question, style: AppTextStyles.h3),
+          Text(
+            widget.question,
+            style: AppTextStyles.bodyMedium.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
           SizedBox(height: 10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -47,9 +53,6 @@ class RadioButtonState extends State<RadioButton> {
                         setState(() {
                           _selectedValue = value as int;
                         });
-                        // logic to save the value
-                        print(value);
-                        print(widget.question);
                       },
                       activeColor: AppColor.primaryColor,
                       visualDensity: VisualDensity.compact,

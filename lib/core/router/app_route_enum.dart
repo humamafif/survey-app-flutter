@@ -1,4 +1,12 @@
-enum AppRouteEnum { home, profile, login, register, surveyForm }
+enum AppRouteEnum {
+  home,
+  profile,
+  login,
+  register,
+  surveyForm,
+  selectMataKuliahDosen,
+  questionPage,
+}
 
 extension AppRouteExtension on AppRouteEnum {
   String get name {
@@ -13,6 +21,10 @@ extension AppRouteExtension on AppRouteEnum {
         return "/register";
       case AppRouteEnum.surveyForm:
         return "/survey-form";
+      case AppRouteEnum.selectMataKuliahDosen:
+        return "/select-mata-kuliah-dosen";
+      case AppRouteEnum.questionPage:
+        return "/questions";
     }
   }
 
@@ -28,6 +40,10 @@ extension AppRouteExtension on AppRouteEnum {
         return '/register';
       case AppRouteEnum.surveyForm:
         return '/survey-form';
+      case AppRouteEnum.selectMataKuliahDosen:
+        return '/select-mata-kuliah-dosen';
+      case AppRouteEnum.questionPage:
+        return '/questions';
     }
   }
 }

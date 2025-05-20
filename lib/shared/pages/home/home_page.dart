@@ -62,15 +62,15 @@ class HomePage extends StatelessWidget {
                 CustomCardSurvey(
                   color: AppColor.accentMint,
                   imagePath: "assets/icons/icon paper.png",
-                  routeName: '/survey-form',
+                  routeName: '/select-mata-kuliah-dosen',
                   title: "Survey Kepuasan Matakuliah",
                 ),
                 16.verticalSpace,
                 CustomCardSurvey(
                   color: AppColor.accentPeach,
                   imagePath: "assets/icons/icon paper.png",
-                  routeName: '/survey-form',
-                  title: "Survey Kepuasan Kinerja Dosen",
+                  routeName: '/select-mata-kuliah-dosen',
+                  title: "Survey Kinerja Dosen Genap 2024/2025",
                 ),
               ],
             ),

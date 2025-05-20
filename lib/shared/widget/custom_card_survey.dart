@@ -46,7 +46,9 @@ class CustomCardSurvey extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: AppTextStyles.h3.copyWith(color: AppColor.textPrimary),
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: AppColor.textPrimary,
+                ),
               ),
             ),
           ],

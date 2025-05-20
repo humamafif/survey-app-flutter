@@ -5,7 +5,6 @@ export 'package:survey_app/firebase_options.dart';
 
 // Feature Modules
 export 'package:survey_app/features/auth/auth.dart';
-export 'package:survey_app/features/survey/survey.dart';
 
 // Flutter Essentials
 export 'package:flutter/material.dart';
