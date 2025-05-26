@@ -21,15 +21,8 @@ class CustomCardSurvey extends StatelessWidget {
         width: double.infinity,
         constraints: BoxConstraints(minHeight: 120.h, maxHeight: 150.h),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.85),
+          color: color,
           borderRadius: BorderRadius.circular(13.r),
-          boxShadow: [
-            BoxShadow(
-              color: color.withOpacity(0.3),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
