@@ -1,13 +1,17 @@
+import 'dart:async';
+
+import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:survey_app/core/app/app_exports.dart';
 import 'package:survey_app/features/questions/domain/entities/question_entity.dart';
 import 'package:survey_app/features/questions/presentation/bloc/questions_bloc.dart';
 import 'package:survey_app/features/questions/presentation/widgets/survey_question_card.dart';
 import 'package:survey_app/features/responses/domain/entities/response_entity.dart';
 import 'package:survey_app/features/responses/presentation/bloc/responses_bloc.dart';
+import 'package:survey_app/shared/pages/loading_page.dart';
 
 class QuestionsListPage extends StatefulWidget {
   final int dosenId;
-  final int matakuliahId;
+  final int? matakuliahId;
   final int surveyId;
   final String? namaMk;
   final String? namaDosen;
@@ -27,7 +31,6 @@ class QuestionsListPage extends StatefulWidget {
 
 class _QuestionsListPageState extends State<QuestionsListPage> {
   final Map<dynamic, dynamic> _ratingResponses = {};
-  // String? kritikSaranText;
   int? _kritikSaranQuestionId;
   final TextEditingController _kritikSaranController = TextEditingController();
   bool _submitting = false;
@@ -66,7 +69,10 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
       appBar: AppBar(
         backgroundColor: AppColor.backgroundColor,
         elevation: 0,
-        title: Text("Pertanyaan Survey", style: AppTextStyles.h2),
+        title: Text(
+          "Pertanyaan Survey ${widget.surveyId}",
+          style: AppTextStyles.h2,
+        ),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -81,7 +87,7 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
         child: BlocBuilder<QuestionsBloc, QuestionsState>(
           builder: (context, state) {
             if (state is QuestionLoadingState) {
-              return _buildLoadingState();
+              return const LoadingPage();
             } else if (state is QuestionErrorState) {
               return _buildErrorState(state.message);
             } else if (state is QuestionLoadedBySurveyIdState) {
@@ -100,18 +106,12 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
             setState(() {
               _submitting = false;
             });
-
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Terima kasih! Survey berhasil dikirim.',
-                  style: TextStyle(color: Colors.white),
-                ),
-                backgroundColor: AppColor.success,
-              ),
+            showSnackbar(
+              context,
+              'Terima kasih! Survey berhasil dikirim.',
+              AppColor.success,
+              SnackBarType.success,
             );
-
-            // Tunggu sebentar sebelum kembali
             Future.delayed(Duration(seconds: 1), () {
               context.pop();
             });
@@ -120,37 +120,33 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
               _submitting = false;
             });
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Gagal mengirim survey: ${state.message}',
-                  style: TextStyle(color: Colors.white),
-                ),
-                backgroundColor: AppColor.error,
-              ),
+            showSnackbar(
+              context,
+              'Gagal mengirim survey: ${state.message}',
+              AppColor.error,
+              SnackBarType.fail,
             );
           }
         },
         builder: (context, state) {
           final bool isLoading = state is ResponsesLoading || _submitting;
-
-          // Cek jika state adalah QuestionLoadedBySurveyIdState atau QuestionLoadedAllState
           final questionsState = context.watch<QuestionsBloc>().state;
           final bool hasQuestions =
               questionsState is QuestionLoadedBySurveyIdState ||
               questionsState is QuestionLoadedAllState;
-
           if (!hasQuestions) {
             return SizedBox.shrink();
           }
-
+          if (isLoading) {
+            return LoadingPage();
+          }
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
             decoration: BoxDecoration(
               color: AppColor.surfaceColor,
               boxShadow: [
                 BoxShadow(
-                  color: AppColor.primaryColor.withOpacity(0.1),
+                  color: AppColor.primaryColor.withAlpha(10),
                   blurRadius: 4,
                   spreadRadius: 0,
                   offset: const Offset(0, -2),
@@ -158,10 +154,7 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
               ],
             ),
             child: ElevatedButton(
-              onPressed:
-                  isLoading || !_isAllRatingQuestionsAnswered()
-                      ? null
-                      : _submitSurvey,
+              onPressed: _submitSurvey,
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColor.primaryColor,
                 disabledBackgroundColor: AppColor.textDisabled,
@@ -172,21 +165,7 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
               ),
               child:
                   isLoading
-                      ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 20.w,
-                            height: 20.h,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
-                            ),
-                          ),
-                          SizedBox(width: 12.w),
-                          Text("Mengirim...", style: AppTextStyles.buttonText),
-                        ],
-                      )
+                      ? LoadingPage()
                       : Text("Kirim Survey", style: AppTextStyles.buttonText),
             ),
           );
@@ -195,7 +174,6 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
     );
   }
 
-  // Cek apakah semua pertanyaan rating sudah dijawab
   bool _isAllRatingQuestionsAnswered() {
     final questionState = context.read<QuestionsBloc>().state;
     List<QuestionEntity> questions = [];
@@ -205,11 +183,7 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
     } else if (questionState is QuestionLoadedAllState) {
       questions = questionState.questions;
     }
-
-    // Hitung jumlah pertanyaan rating
     final ratingQuestions = questions.where((q) => q.type == "rating").toList();
-
-    // Cek apakah semua pertanyaan rating sudah dijawab
     return ratingQuestions.length == _ratingResponses.length;
   }
 
@@ -222,7 +196,7 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
-            color: AppColor.primaryColor.withOpacity(0.1),
+            color: AppColor.primaryColor.withAlpha(10),
             blurRadius: 10,
             spreadRadius: 0,
             offset: const Offset(0, 3),
@@ -265,19 +239,6 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildLoadingState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircularProgressIndicator(color: AppColor.primaryColor),
-          SizedBox(height: 16.h),
-          Text("Memuat pertanyaan survey...", style: AppTextStyles.bodyMedium),
-        ],
-      ),
     );
   }
 
@@ -343,21 +304,14 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
               _buildInfoCard(),
               SizedBox(height: 16.h),
             ],
-
-            Text("Jawab pertanyaan berikut:", style: AppTextStyles.h3),
-            SizedBox(height: 16.h),
-
-            // Di dalam _buildQuestionsList
             ...questions.map((question) {
-              // Jika pertanyaan kritik dan saran, simpan ID-nya
               if (question.type == "kritik_saran") {
                 _kritikSaranQuestionId = question.id;
               }
-
               return SurveyQuestionCard(
                 key: ValueKey(question.id),
                 question: question,
-                initialRating: _ratingResponses[question.id], // Tambahkan ini
+                initialRating: _ratingResponses[question.id],
                 onRatingSelected:
                     question.type == "rating"
                         ? (rating) {
@@ -365,7 +319,7 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
                             _ratingResponses[question.id] = rating;
                             print(
                               "Saved rating for question ${question.id}: $rating",
-                            ); // Tambahkan log
+                            );
                           });
                         }
                         : null,
@@ -374,7 +328,7 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
                         ? (text) {
                           print(
                             "Kritik Saran untuk question ${question.id}: $text",
-                          ); // Tambahkan log
+                          );
                         }
                         : null,
                 textController:
@@ -383,48 +337,34 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
                         : null,
               );
             }),
-
-            SizedBox(height: 80.h), // Space for bottom button
           ],
         );
   }
 
-  // Dalam method _submitSurvey()
   void _submitSurvey() {
     if (_currentUser == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Anda perlu login terlebih dahulu',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: AppColor.error,
-        ),
+      showSnackbar(
+        context,
+        'Anda perlu login terlebih dahulu',
+        AppColor.error,
+        SnackBarType.fail,
       );
       return;
     }
-
-    // Validasi apakah semua pertanyaan rating sudah dijawab
     if (!_isAllRatingQuestionsAnswered()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Harap jawab semua pertanyaan sebelum mengirim',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: AppColor.warning,
-        ),
+      showSnackbar(
+        context,
+        'Harap jawab semua pertanyaan sebelum mengirim',
+        AppColor.warning,
+        SnackBarType.alert,
       );
       return;
     }
-
     setState(() {
       _submitting = true;
     });
-
     print("Rating responses: $_ratingResponses");
 
-    // Buat list responses dari pertanyaan rating
     final responses =
         _ratingResponses.entries.map((entry) {
           return ResponseEntity(
@@ -435,11 +375,8 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
             kritikSaran: null,
           );
         }).toList();
-
-    // Jika ada pertanyaan kritik dan saran, tambahkan ke responses
     if (_kritikSaranQuestionId != null) {
       final kritikSaranText = _kritikSaranController.text.trim();
-
       print("Kritik Saran Question ID: $_kritikSaranQuestionId");
       print("Kritik Saran Text: '$kritikSaranText'");
 
@@ -449,14 +386,12 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
             userId: 20,
             surveyId: widget.surveyId,
             questionId: _kritikSaranQuestionId!,
-            nilai: 5, // Nilai default untuk pertanyaan kritik_saran
             kritikSaran: kritikSaranText,
           ),
         );
         print("Kritik saran berhasil ditambahkan ke responses");
       }
     }
-
     print(
       "Mengirim ${responses.length} responses dengan multi-insert dan penilaian dosen...",
     );
@@ -465,161 +400,14 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
         "Response ${i + 1}/${responses.length} - QuestionID: ${responses[i].questionId}, Nilai: ${responses[i].nilai}, KritikSaran: ${responses[i].kritikSaran}",
       );
     }
-
-    // Gunakan event baru yang menangani multi-insert dan penilaian dosen sekaligus
     context.read<ResponsesBloc>().add(
       CreateMultipleResponsesWithAssesmentEvent(
         responses: responses,
         mahasiswaId: 20,
-        mkId: widget.matakuliahId,
+        mkId: widget.matakuliahId!,
         dosenId: widget.dosenId,
         surveyId: widget.surveyId,
       ),
     );
   }
-
-  // // Implementasi manual tanpa menggunakan bloc
-  // Future<void> _manualSendResponses() async {
-  //   final Dio dio = Dio();
-  //   dio.options.headers = {
-  //     'Content-Type': 'application/json',
-  //     'Accept': 'application/json',
-  //   };
-
-  //   // Buat list responses dari pertanyaan rating
-  //   final responses =
-  //       _ratingResponses.entries.map((entry) {
-  //         return {
-  //           'user_id': 20,
-  //           'survey_id': widget.surveyId,
-  //           'question_id': entry.key,
-  //           'nilai': entry.value,
-  //         };
-  //       }).toList();
-
-  //   // Jika ada kritik dan saran, tambahkan ke responses
-  //   if (_kritikSaranQuestionId != null) {
-  //     final kritikSaranText = _kritikSaranController.text.trim();
-  //     if (kritikSaranText.isNotEmpty) {
-  //       responses.add({
-  //         'user_id': 20,
-  //         'survey_id': widget.surveyId,
-  //         'question_id': _kritikSaranQuestionId!,
-  //         'nilai': 0,
-  //         'kritik_saran': kritikSaranText,
-  //       });
-  //       print("Kritik saran ditambahkan: $kritikSaranText");
-  //     }
-  //   }
-
-  //   print("Total ${responses.length} responses akan dikirim");
-
-  //   int successCount = 0;
-  //   List<String> errors = [];
-
-  //   // Kirim satu per satu
-  //   for (int i = 0; i < responses.length; i++) {
-  //     try {
-  //       final response = responses[i];
-  //       print("Mengirim ${i + 1}/${responses.length}: $response");
-
-  //       final result = await dio.post(
-  //         '${dotenv.env['BASE_URL']}/responses',
-  //         data: response,
-  //       );
-
-  //       print("Response ${i + 1}: ${result.statusCode} - ${result.data}");
-  //       successCount++;
-  //     } catch (e) {
-  //       print("Error saat mengirim response ${i + 1}: $e");
-  //       if (e.toString().contains('created successfully')) {
-  //         print("Response ${i + 1} berhasil meskipun ada error");
-  //         successCount++;
-  //       } else {
-  //         errors.add("Response ${i + 1}: $e");
-  //       }
-  //     }
-
-  //     // Tambahkan delay kecil antara requests
-  //     await Future.delayed(Duration(milliseconds: 200));
-  //   }
-
-  //   setState(() {
-  //     _submitting = false;
-  //   });
-
-  //   // Tampilkan hasil
-  //   if (successCount > 0) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text(
-  //           'Terima kasih! Survey berhasil dikirim ($successCount/${responses.length}).',
-  //           style: TextStyle(color: Colors.white),
-  //         ),
-  //         backgroundColor: AppColor.success,
-  //       ),
-  //     );
-
-  //     // Tunggu sebentar sebelum pop
-  //     Future.delayed(Duration(seconds: 1), () {
-  //       context.pop();
-  //     });
-  //   } else {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text(
-  //           'Gagal mengirim survey: ${errors.join(", ")}',
-  //           style: TextStyle(color: Colors.white),
-  //         ),
-  //         backgroundColor: AppColor.error,
-  //       ),
-  //     );
-  //   }
-  // }
-
-  // Future<void> _sendResponsesOneByOne() async {
-  //   // Buat list responses dari pertanyaan rating
-  //   final responses =
-  //       _ratingResponses.entries.map((entry) {
-  //         return ResponseEntity(
-  //           userId: 1,
-  //           surveyId: widget.surveyId,
-  //           questionId: entry.key,
-  //           nilai: entry.value,
-  //           kritikSaran: null, // Kritik saran terpisah
-  //         );
-  //       }).toList();
-
-  //   // Jika ada pertanyaan kritik dan saran, tambahkan ke responses
-  //   if (_kritikSaranQuestionId != null) {
-  //     final kritikSaranText = _kritikSaranController.text.trim();
-
-  //     print("Kritik Saran Question ID: $_kritikSaranQuestionId");
-  //     print("Kritik Saran Text: '$kritikSaranText'");
-
-  //     if (kritikSaranText.isNotEmpty) {
-  //       responses.add(
-  //         ResponseEntity(
-  //           userId: 1,
-  //           surveyId: widget.surveyId,
-  //           questionId: _kritikSaranQuestionId!,
-  //           nilai: 5, // Nilai default untuk pertanyaan kritik_saran
-  //           kritikSaran: kritikSaranText,
-  //         ),
-  //       );
-  //       print("Kritik saran berhasil ditambahkan ke responses");
-  //     }
-  //   }
-
-  //   print("Mengirim ${responses.length} responses...");
-  //   for (int i = 0; i < responses.length; i++) {
-  //     print(
-  //       "Mengirim response ${i + 1}/${responses.length} - QuestionID: ${responses[i].questionId}, Nilai: ${responses[i].nilai}, KritikSaran: ${responses[i].kritikSaran}",
-  //     );
-  //   }
-
-  //   // Gunakan metode createBulkResponses di ResponseBloc
-  //   // untuk mengirim semua responses sekaligus
-  //   context.read<ResponsesBloc>().add(CreateBulkResponsesEvent(responses));
-  // }
 }
