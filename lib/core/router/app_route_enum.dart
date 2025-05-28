@@ -6,6 +6,7 @@ enum AppRouteEnum {
   surveyForm,
   selectMataKuliahDosen,
   questionPage,
+  loadingPage,
 }
 
 extension AppRouteExtension on AppRouteEnum {
@@ -25,6 +26,8 @@ extension AppRouteExtension on AppRouteEnum {
         return "/select-mata-kuliah-dosen";
       case AppRouteEnum.questionPage:
         return "/questions";
+      case AppRouteEnum.loadingPage:
+        return "/loading";
     }
   }
 
@@ -44,6 +47,8 @@ extension AppRouteExtension on AppRouteEnum {
         return '/select-mata-kuliah-dosen';
       case AppRouteEnum.questionPage:
         return '/questions';
+      case AppRouteEnum.loadingPage:
+        return '/loading';
     }
   }
 }
