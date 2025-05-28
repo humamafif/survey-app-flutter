@@ -1,3 +1,4 @@
+import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:survey_app/core/app/app_exports.dart';
 
 bool isValidStudentEmail(String email) {
@@ -15,7 +16,12 @@ bool isValidStudentEmail(String email) {
 
 bool isStudentEmail(String email, BuildContext context) {
   if (email.trim().isEmpty) {
-    showSnackbar(context, "Email tidak boleh kosong!", AppColor.red);
+    showSnackbar(
+      context,
+      "Email tidak boleh kosong!",
+      AppColor.error,
+      SnackBarType.fail,
+    );
     return false;
   }
 
@@ -23,7 +29,8 @@ bool isStudentEmail(String email, BuildContext context) {
     showSnackbar(
       context,
       "Gunakan email student UIN prodi Teknik Informatika!",
-      AppColor.red,
+      AppColor.error,
+      SnackBarType.fail,
     );
     return false;
   }

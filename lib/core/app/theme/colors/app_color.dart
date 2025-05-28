@@ -32,11 +32,9 @@ class AppColor {
   ); // Light gray for disabled/hint text
 
   // Semantic colors
-  static const Color success = Color(
-    0xFF9BCF9C,
-  ); // Pastel green for success states
+  static const Color success = Color.fromARGB(255, 98, 226, 100);
   static const Color warning = Color(0xFFFFD6A5); // Pastel orange for warnings
-  static const Color error = Color(0xFFF1A7A7); // Pastel red for errors
+  static const Color error = Color.fromARGB(255, 255, 74, 74);
   static const Color info = Color(0xFFABD4F3); // Pastel blue for information
 
   // Accent colors for highlights and decorative elements

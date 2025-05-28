@@ -57,6 +57,6 @@ class AppTextStyles {
 
   static final TextStyle error = GoogleFonts.poppins(
     fontSize: 14,
-    color: AppColor.red,
+    color: AppColor.error,
   );
 }

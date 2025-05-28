@@ -39,13 +39,17 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^9.1.0
   flutter_dotenv: ^5.2.1
+  flutter_icon_snackbar: ^1.2.1
+  flutter_launcher_icons: ^0.14.3
   flutter_native_splash: ^2.4.6
   flutter_screenutil: ^5.9.3
   get_it: ^8.0.3
   go_router: ^14.8.1
   google_fonts: ^6.2.1
   google_sign_in: ^6.3.0
+  loading_indicator: ^3.1.1
   shared_preferences: ^2.5.3
+  typewritertext: ^3.0.9
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -105,3 +109,9 @@ flutter_native_splash:
     image_dark: assets/images/logo/logo_uin.png
   ios: true
   web: false
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/icon.png"
+  min_sdk_android: 21

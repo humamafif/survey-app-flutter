@@ -1,4 +1,5 @@
 import 'package:survey_app/core/app/app_exports.dart';
+import 'package:survey_app/shared/pages/loading_page.dart';
 import 'package:survey_app/shared/utils/first_name.dart';
 
 class HomePage extends StatelessWidget {
@@ -15,9 +16,7 @@ class HomePage extends StatelessWidget {
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is AuthLoading) {
-            return Center(
-              child: CircularProgressIndicator(color: AppColor.primaryColor),
-            );
+            return LoadingPage();
           }
 
           if (state is Authenticated) {
@@ -63,14 +62,7 @@ class HomePage extends StatelessWidget {
                   color: AppColor.accentMint,
                   imagePath: "assets/icons/icon paper.png",
                   routeName: '/select-mata-kuliah-dosen',
-                  title: "Survey Kepuasan Matakuliah",
-                ),
-                16.verticalSpace,
-                CustomCardSurvey(
-                  color: AppColor.accentPeach,
-                  imagePath: "assets/icons/icon paper.png",
-                  routeName: '/select-mata-kuliah-dosen',
-                  title: "Survey Kinerja Dosen Genap 2024/2025",
+                  title: "Survey Kinerja Dosen",
                 ),
               ],
             ),

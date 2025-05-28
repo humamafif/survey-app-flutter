@@ -40,14 +40,13 @@ class _SelectMataKuliahDosenPageState extends State<SelectMataKuliahDosenPage> {
       List<MataKuliahEntity> matchingMataKuliah =
           allMataKuliah.where((mk) => mk.namaMk == mataKuliahName).toList();
 
-      filteredDosens =
-          matchingMataKuliah
-              .where((mk) => mk.dosen != null)
-              .map((mk) => mk.dosen!)
-              .toList();
-      // if (filteredDosens.isNotEmpty) {
-      //   selectedDosen = filteredDosens.first;
-      // }
+      filteredDosens = [];
+      for (var mk in matchingMataKuliah) {
+        if (mk.dosens != null && mk.dosens!.isNotEmpty) {
+          filteredDosens.addAll(mk.dosens!);
+        }
+      }
+      filteredDosens = filteredDosens.toSet().toList();
     });
   }
 
@@ -104,19 +103,19 @@ class _SelectMataKuliahDosenPageState extends State<SelectMataKuliahDosenPage> {
                       selectedDosen == null
                           ? null
                           : () {
+                            MataKuliahEntity? selectedMk;
+                            for (var mk in allMataKuliah) {
+                              if (mk.namaMk == selectedMataKuliahName) {
+                                selectedMk = mk;
+                                break;
+                              }
+                            }
+
                             context.pushNamed(
                               AppRouteEnum.questionPage.name,
                               queryParameters: {
                                 'dosenId': selectedDosen!.id.toString(),
-                                'matakuliahId':
-                                    allMataKuliah
-                                        .firstWhere(
-                                          (mk) =>
-                                              mk.namaMk ==
-                                              selectedMataKuliahName,
-                                        )
-                                        .id
-                                        .toString(),
+                                'matakuliahId': selectedMk?.id.toString() ?? '',
                               },
                             );
                           },

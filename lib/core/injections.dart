@@ -21,6 +21,15 @@ import 'package:survey_app/features/questions/domain/repositories/question_repos
 import 'package:survey_app/features/questions/domain/usecases/get_all_question_usecase.dart';
 import 'package:survey_app/features/questions/domain/usecases/get_question_by_survey_id_usecase.dart';
 import 'package:survey_app/features/questions/presentation/bloc/questions_bloc.dart';
+import 'package:survey_app/features/responses/data/datasources/response_remote_data_source.dart';
+import 'package:survey_app/features/responses/data/repositories/response_repository_impl.dart';
+import 'package:survey_app/features/responses/domain/repositories/response_repository.dart';
+import 'package:survey_app/features/responses/domain/usecases/create_multiple_responses_usecase.dart';
+import 'package:survey_app/features/responses/domain/usecases/create_multiple_responses_with_assesment_usecase.dart';
+import 'package:survey_app/features/responses/domain/usecases/create_response_usecase.dart';
+import 'package:survey_app/features/responses/domain/usecases/get_responses_by_survey_usecase.dart';
+import 'package:survey_app/features/responses/domain/usecases/get_responses_by_user_usecase.dart';
+import 'package:survey_app/features/responses/presentation/bloc/responses_bloc.dart';
 
 var sl = GetIt.instance;
 
@@ -119,6 +128,37 @@ Future<void> initServiceLocator() async {
     () => QuestionsBloc(
       getAllQuestionsUsecase: sl(),
       getQuestionsBySurveyIdUsecase: sl(),
+    ),
+  );
+
+  // Responses Feature
+  // Data sources
+  sl.registerLazySingleton<ResponseRemoteDataSource>(
+    () => ResponseRemoteDataSourceImpl(dio: sl()),
+  );
+
+  // Repositories
+  sl.registerLazySingleton<ResponseRepository>(
+    () => ResponseRepositoryImpl(remoteDataSource: sl()),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => CreateResponseUsecase(sl()));
+  sl.registerLazySingleton(() => CreateMultipleResponsesUsecase(sl()));
+  sl.registerLazySingleton(
+    () => CreateMultipleResponsesWithAssesmentUsecase(sl()),
+  );
+  sl.registerLazySingleton(() => GetResponsesByUserUsecase(sl()));
+  sl.registerLazySingleton(() => GetResponsesBySurveyUsecase(sl()));
+
+  // BLoC
+  sl.registerFactory(
+    () => ResponsesBloc(
+      createResponseUsecase: sl(),
+      createMultipleResponsesWithPenilaianUsecase: sl(),
+      createMultipleResponsesUsecase: sl(),
+      getResponsesByUserUsecase: sl(),
+      getResponsesBySurveyUsecase: sl(),
     ),
   );
 }

@@ -1,6 +1,7 @@
 import 'package:survey_app/core/app/app_exports.dart';
 import 'package:survey_app/features/mata_kuliah/presentation/pages/select_mata_kuliah_dosen_page.dart';
 import 'package:survey_app/features/questions/presentation/pages/questions_list_page.dart';
+import 'package:survey_app/shared/pages/loading_page.dart';
 
 /*
 Example Use of Go_Router:
@@ -52,7 +53,13 @@ class AppRouter {
         parentNavigatorKey: _rootNavigatorKey,
         path: AppRouteEnum.login.path,
         name: AppRouteEnum.login.name,
-        builder: (context, state) => LoginPage(), //TODO Change Page (login)!
+        builder: (context, state) => LoginPage(),
+      ),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: AppRouteEnum.loadingPage.path,
+        name: AppRouteEnum.loadingPage.name,
+        builder: (context, state) => LoadingPage(),
       ),
       // GoRoute(
       //   parentNavigatorKey: _rootNavigatorKey,
@@ -92,10 +99,12 @@ class AppRouter {
                     parentNavigatorKey: _rootNavigatorKey,
                     path: AppRouteEnum.selectMataKuliahDosen.path,
                     name: AppRouteEnum.selectMataKuliahDosen.name,
-                    builder: (context, state) => SelectMataKuliahDosenPage(),
+                    builder:
+                        (context, state) =>
+                            SelectMataKuliahDosenPage(surveyId: 1),
                     pageBuilder:
                         (context, state) => NoTransitionPage(
-                          child: SelectMataKuliahDosenPage(),
+                          child: SelectMataKuliahDosenPage(surveyId: 1),
                         ),
                     routes: [
                       GoRoute(
@@ -103,15 +112,18 @@ class AppRouter {
                         path: AppRouteEnum.questionPage.path,
                         name: AppRouteEnum.questionPage.name,
                         builder: (context, state) {
-                          final dosenId = int.tryParse(
-                            state.uri.queryParameters['dosenId'] ?? '',
-                          );
-                          final matakuliahId = int.tryParse(
-                            state.uri.queryParameters['matakuliahId'] ?? '',
-                          );
                           return QuestionsListPage(
-                            dosenId: dosenId!,
-                            matakuliahId: matakuliahId!,
+                            dosenId: int.parse(
+                              state.uri.queryParameters['dosenId']!,
+                            ),
+                            matakuliahId: int.parse(
+                              state.uri.queryParameters['matakuliahId']!,
+                            ),
+                            surveyId: int.parse(
+                              state.uri.queryParameters['surveyId']!,
+                            ),
+                            namaMk: state.uri.queryParameters['namaMk'],
+                            namaDosen: state.uri.queryParameters['namaDosen'],
                           );
                         },
                       ),
