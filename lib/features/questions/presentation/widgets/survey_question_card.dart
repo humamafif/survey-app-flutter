@@ -81,7 +81,7 @@ class _SurveyQuestionCardState extends State<SurveyQuestionCard> {
   Widget _buildRatingSelector() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: List.generate(5, (index) {
+      children: List.generate(4, (index) {
         final rating = index + 1;
         return Expanded(
           child: Column(
@@ -106,7 +106,6 @@ class _SurveyQuestionCardState extends State<SurveyQuestionCard> {
                 },
                 activeColor: AppColor.primaryColor,
                 visualDensity: VisualDensity.compact,
-                // Pastikan radio button selalu aktif dan visibel
                 materialTapTargetSize: MaterialTapTargetSize.padded,
               ),
               Text("$rating", style: AppTextStyles.bodySmall),

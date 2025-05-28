@@ -16,8 +16,7 @@ class QuestionRemoteDataSourceImpl implements QuestionRemoteDataSource {
   Future<List<QuestionModel>> getQuestionsBySurveyId(int surveyId) async {
     try {
       final response = await dio.get(
-        '${dotenv.env['BASE_URL']}/survey-questions/2',
-        queryParameters: {'survey_id': surveyId},
+        '${dotenv.env['BASE_URL']}/survey-questions/$surveyId',
       );
 
       if (response.statusCode == 200) {

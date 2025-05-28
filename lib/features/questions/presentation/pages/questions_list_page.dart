@@ -368,7 +368,7 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
     final responses =
         _ratingResponses.entries.map((entry) {
           return ResponseEntity(
-            userId: 20,
+            userId: int.parse(_currentUser!.id!),
             surveyId: widget.surveyId,
             questionId: entry.key,
             nilai: entry.value,
@@ -383,13 +383,15 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
       if (kritikSaranText.isNotEmpty) {
         responses.add(
           ResponseEntity(
-            userId: 20,
+            userId: int.parse(_currentUser!.id!),
             surveyId: widget.surveyId,
             questionId: _kritikSaranQuestionId!,
             kritikSaran: kritikSaranText,
           ),
         );
-        print("Kritik saran berhasil ditambahkan ke responses");
+        print(
+          "✅ Kritik saran berhasil ditambahkan ke responses. ID USER: ${_currentUser!.id.toString()}",
+        );
       }
     }
     print(
@@ -403,7 +405,7 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
     context.read<ResponsesBloc>().add(
       CreateMultipleResponsesWithAssesmentEvent(
         responses: responses,
-        mahasiswaId: 20,
+        mahasiswaId: int.parse(_currentUser!.id!),
         mkId: widget.matakuliahId!,
         dosenId: widget.dosenId,
         surveyId: widget.surveyId,

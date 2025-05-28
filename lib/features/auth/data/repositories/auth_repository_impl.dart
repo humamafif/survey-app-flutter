@@ -40,4 +40,14 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(ServerFailure("Unexpected error: ${e.toString()}"));
     }
   }
+
+  @override
+  Future<Either<Failure, UserEntity>> getDetailUser(String studentEmail) async {
+    try {
+      final user = await remoteDataSource.getDetailUser(studentEmail);
+      return Right(user!);
+    } catch (e) {
+      return Left(ServerFailure("Unexpected error: ${e.toString()}"));
+    }
+  }
 }

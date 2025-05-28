@@ -10,6 +10,7 @@ abstract class AuthRemoteDatasource {
   Future<UserModel?> getCurrent();
   Future<UserModel> signInWithGoogle();
   Future<void> saveUserData(UserModel user);
+  Future<UserModel?> getDetailUser(String studentEmail);
 }
 
 class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
@@ -71,13 +72,32 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
           message: e.toString(),
         );
       }
-      print("SIGN IN");
-      print(UserModel.fromFirebase(user).toJson());
-
-      await saveUserData(
-        UserModel(uid: user.uid, email: user.email, name: user.displayName),
-      );
-      return UserModel.fromFirebase(user);
+      print("✅ Login Google berhasil untuk: $email");
+      try {
+        final existingUser = await getDetailUser(email);
+        if (existingUser != null) {
+          print("✅ User sudah terdaftar ${existingUser.email}");
+          return existingUser;
+        } else {
+          print("⚠️ User belum terdaftar, akan save data user baru");
+          UserModel newUser = UserModel(
+            uid: user.uid,
+            email: user.email,
+            name: user.displayName,
+          );
+          await saveUserData(newUser);
+          final savedUser = await getDetailUser(newUser.email!);
+          if (savedUser == null) {
+            throw Exception(
+              "User berhasil disimpan tapi tidak dapat diambil dari database",
+            );
+          }
+          return savedUser;
+        }
+      } catch (e) {
+        print("⚠️ Error saat cek/save user di database: $e");
+        throw Exception('Error while checking or saving user data: $e');
+      }
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code, message: e.message);
     } on PlatformException catch (e) {
@@ -103,17 +123,48 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
           },
         ),
       );
-      print('DATA: ${user.toJson()}');
-
-      if (response.statusCode != 201) {
-        throw Exception('Failed to save user data');
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        print('✅ Data user berhasil disimpan!');
       }
     } on DioException catch (e) {
-      // throw Exception('Failed to save user data: ${e}');
-      print('⚠️ Failed to save user data: ${e}');
-      return;
+      print('❌ DioException saat menyimpan data user: ${e.message}');
+      throw Exception('Failed to save user data: ${e.message}');
     } catch (e) {
-      throw Exception("Failed to save data user: $e");
+      print('❌ Unexpected error in saveUserData: $e');
+      throw Exception("Failed to save user data: $e");
+    }
+  }
+
+  @override
+  Future<UserModel?> getDetailUser(String studentEmail) async {
+    try {
+      final response = await dio.get(
+        '${dotenv.env['BASE_URL']}/users/email/$studentEmail',
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 200 && response.data != null) {
+        final userData = response.data['data'];
+        print("✅ User ditemukan di database: $studentEmail");
+        return UserModel.fromJson(userData);
+      } else {
+        print("⚠️ User tidak ditemukan di database: $studentEmail");
+        return null;
+      }
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) {
+        print("⚠️ User tidak ditemukan di database: $studentEmail");
+        return null;
+      }
+      print("❌ Error saat mencari user: ${e.message}");
+      throw Exception('Failed to fetch user details: ${e.message}');
+    } catch (e) {
+      print("❌ Unexpected error in getDetailUser: $e");
+      throw Exception('Unexpected error in getDetailUser: $e');
     }
   }
 }
