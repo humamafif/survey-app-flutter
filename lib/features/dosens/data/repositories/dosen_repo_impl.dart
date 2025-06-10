@@ -18,16 +18,4 @@ class DosenRepoImpl extends DosenRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
-
-  @override
-  Future<Either<Failure, DosenModel>> getDosenById(String id) {
-    // TODO: implement getDosenById
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, DosenEntity>> getDosenByName(String id) {
-    // TODO: implement getDosenByName
-    throw UnimplementedError();
-  }
 }

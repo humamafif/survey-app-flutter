@@ -5,8 +5,6 @@ import 'package:survey_app/features/dosens/data/datasources/dosen_remote_datasou
 import 'package:survey_app/features/dosens/data/repositories/dosen_repo_impl.dart';
 import 'package:survey_app/features/dosens/domain/repositories/dosen_repository.dart';
 import 'package:survey_app/features/dosens/domain/usecases/get_all_dosen_usecase.dart';
-import 'package:survey_app/features/dosens/domain/usecases/get_dosen_by_id_usecase.dart';
-import 'package:survey_app/features/dosens/domain/usecases/get_dosen_byname_usecase.dart';
 import 'package:survey_app/features/dosens/presentation/bloc/dosens_bloc.dart';
 import 'package:survey_app/features/mata_kuliah/data/datasources/mata_kuliah_data_source.dart';
 import 'package:survey_app/features/mata_kuliah/data/repositories/mata_kuliah_repository_impl.dart';
@@ -78,9 +76,6 @@ Future<void> initServiceLocator() async {
     () => DosenRepoImpl(dosenRemoteDatasource: sl()),
   );
   sl.registerLazySingleton(() => GetAllDosenUsecase(sl()));
-  sl.registerLazySingleton(() => GetDosenByIdUsecase(sl()));
-  sl.registerLazySingleton(() => GetDosenBynameUsecase(sl()));
-
   sl.registerLazySingleton(() => DosensBloc(sl()));
 
   // Mata Kuliah Feature

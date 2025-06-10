@@ -8,9 +8,6 @@ part 'dosens_state.dart';
 
 class DosensBloc extends Bloc<DosensEvent, DosensState> {
   final GetAllDosenUsecase getAllDosenUsecase;
-  // final GetDosenByIdUsecase getDosenByIdUsecase;
-  // final GetDosenBynameUsecase getDosenBynameUsecase;
-  // final DosenRemoteDatasource dosenRemoteDatasource;
 
   DosensBloc(this.getAllDosenUsecase) : super(DosensInitial()) {
     on<GetAllDosensEvent>((event, emit) async {
