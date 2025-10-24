@@ -61,21 +61,6 @@ class AppRouter {
         name: AppRouteEnum.loadingPage.name,
         builder: (context, state) => LoadingPage(),
       ),
-      // GoRoute(
-      //   parentNavigatorKey: _rootNavigatorKey,
-      //   path: AppRouteEnum.surveyForm.path,
-      //   name: AppRouteEnum.surveyForm.name,
-      //   builder:
-      //       (context, state) => SurveyPage(), //TODO Change Page (register)!
-      // ),
-
-      //Authentication
-      // GoRoute(
-      //   parentNavigatorKey: _rootNavigatorKey,
-      //   path: AppRouteEnum.login.path,
-      //   name: AppRouteEnum.login.name,
-      //   builder: (context, state) => Container(), //TODO Change Page (login)!
-      // ),
       //Main Page
       StatefulShellRoute.indexedStack(
         builder:
@@ -127,101 +112,12 @@ class AppRouter {
                           );
                         },
                       ),
-                      // GoRoute(
-                      //   parentNavigatorKey: _rootNavigatorKey,
-                      //   path: 'survey-form', // Path sederhana tanpa parameter
-                      //   name: AppRouteEnum.surveyForm.name,
-                      //   builder: (context, state) {
-                      //     // Akses parameter dari state.queryParameters
-                      //     final dosenId = state.uri.queryParameters['dosenId'];
-                      //     final mataKuliahId =
-                      //         state.uri.queryParameters['mataKuliahId'];
-
-                      //     return SurveyPage(
-                      //       dosenId: dosenId,
-                      //       mataKuliahId: mataKuliahId,
-                      //     );
-                      //   },
-                      //   pageBuilder:
-                      //       (context, state) => NoTransitionPage(
-                      //         child: SurveyPage(
-                      //           dosenId: state.uri.queryParameters['dosenId'],
-                      //           mataKuliahId:
-                      //               state.uri.queryParameters['mataKuliahId'],
-                      //         ),
-                      //       ),
-                      //   routes: [
-
-                      //   ],
-                      // ),
                     ],
                   ),
-                  // GoRoute(
-                  //   parentNavigatorKey: _rootNavigatorKey,
-                  //   path: AppRouteEnum.member.path,
-                  //   name: AppRouteEnum.member.name,
-                  //   builder:
-                  //       (context, state) =>
-                  //           Container(), //TODO change page (member)!
-                  //   routes: [
-                  //     GoRoute(
-                  //       parentNavigatorKey: _rootNavigatorKey,
-                  //       path: AppRouteEnum.detailMember.path,
-                  //       name: AppRouteEnum.detailMember.name,
-                  //       builder:
-                  //           (context, state) =>
-                  //               Container(), //TODO change page (detailMember)!
-                  //     ),
-                  //   ],
-                  // ),
-                  // GoRoute(
-                  //   parentNavigatorKey: _rootNavigatorKey,
-                  //   path: AppRouteEnum.courses.path,
-                  //   name: AppRouteEnum.courses.name,
-                  //   builder:
-                  //       (context, state) =>
-                  //           Container(), //TODO change page (courses)
-                  //   routes: [
-                  //     GoRoute(
-                  //       parentNavigatorKey: _rootNavigatorKey,
-                  //       path: AppRouteEnum.detailCourse.path,
-                  //       name: AppRouteEnum.detailCourse.name,
-                  //       builder:
-                  //           (context, state) =>
-                  //               Container(), //TODO change page (detailCourse)!
-                  //     ),
-                  //   ],
-                  // ),
                 ],
               ),
             ],
           ),
-          //post index = 1
-          // StatefulShellBranch(
-          //   navigatorKey: _shellNavigatorPost,
-          //   routes: [
-          //     GoRoute(
-          //       parentNavigatorKey: _shellNavigatorPost,
-          //       path: AppRouteEnum.post.path,
-          //       name: AppRouteEnum.post.name,
-          //       pageBuilder:
-          //           (context, state) => NoTransitionPage(
-          //             child: Container(),
-          //           ), //TODO Change Page (post)!
-          //       routes: [
-          //         GoRoute(
-          //           parentNavigatorKey: _rootNavigatorKey,
-          //           path: AppRouteEnum.newPost.path,
-          //           name: AppRouteEnum.newPost.name,
-          //           builder:
-          //               (context, state) =>
-          //                   Container(), //TODO change page (new post)!
-          //         ),
-          //       ],
-          //     ),
-          //   ],
-          // ),
-          //profile index = 2
           StatefulShellBranch(
             navigatorKey: _shellNavigatorProfile,
             routes: [
@@ -230,17 +126,6 @@ class AppRouter {
                 path: AppRouteEnum.profile.path,
                 name: AppRouteEnum.profile.name,
                 builder: (context, state) => ProfilePage(),
-                //TODO Change Page (profile)!
-                routes: [
-                  // GoRoute(
-                  //   parentNavigatorKey: _rootNavigatorKey,
-                  //   path: AppRouteEnum.about.path,
-                  //   name: AppRouteEnum.about.name,
-                  //   builder:
-                  //       (context, state) =>
-                  //           Container(), //TODO Change Page (about)!
-                  // ),
-                ],
               ),
             ],
           ),
