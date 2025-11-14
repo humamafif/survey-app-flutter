@@ -1,4 +1,4 @@
-part of 'mata_kuliah_bloc.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 abstract class MataKuliahEvent extends Equatable {
   const MataKuliahEvent();

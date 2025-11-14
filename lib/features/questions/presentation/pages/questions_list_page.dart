@@ -1,13 +1,4 @@
-import 'dart:async';
-
-import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:survey_app/core/app/app_exports.dart';
-import 'package:survey_app/features/questions/domain/entities/question_entity.dart';
-import 'package:survey_app/features/questions/presentation/bloc/questions_bloc.dart';
-import 'package:survey_app/features/questions/presentation/widgets/survey_question_card.dart';
-import 'package:survey_app/features/responses/domain/entities/response_entity.dart';
-import 'package:survey_app/features/responses/presentation/bloc/responses_bloc.dart';
-import 'package:survey_app/shared/pages/loading_page.dart';
 
 class QuestionsListPage extends StatefulWidget {
   final int dosenId;
@@ -69,10 +60,7 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
       appBar: AppBar(
         backgroundColor: AppColor.backgroundColor,
         elevation: 0,
-        title: Text(
-          "Pertanyaan Survey ${widget.surveyId}",
-          style: AppTextStyles.h2,
-        ),
+        title: Text("Pertanyaan Survey", style: AppTextStyles.h2),
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -112,8 +100,8 @@ class _QuestionsListPageState extends State<QuestionsListPage> {
               AppColor.success,
               SnackBarType.success,
             );
-            Future.delayed(Duration(seconds: 1), () {
-              context.pop();
+            Future.delayed(Duration(seconds: 0), () {
+              GoRouter.of(context).goNamed("/home");
             });
           } else if (state is ResponsesError) {
             setState(() {

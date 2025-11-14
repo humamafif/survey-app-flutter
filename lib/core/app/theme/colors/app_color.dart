@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class AppColor {
   // Private constructor to prevent instantiation
@@ -33,7 +33,7 @@ class AppColor {
 
   // Semantic colors
   static const Color success = Color.fromARGB(255, 98, 226, 100);
-  static const Color warning = Color(0xFFFFD6A5); // Pastel orange for warnings
+  static const Color warning = Color.fromARGB(255, 255, 187, 105);
   static const Color error = Color.fromARGB(255, 255, 74, 74);
   static const Color info = Color(0xFFABD4F3); // Pastel blue for information
 

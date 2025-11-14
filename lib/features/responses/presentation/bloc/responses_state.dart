@@ -1,4 +1,4 @@
-part of 'responses_bloc.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 abstract class ResponsesState extends Equatable {
   const ResponsesState();

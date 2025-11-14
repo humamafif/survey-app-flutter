@@ -1,7 +1,4 @@
 import 'package:survey_app/core/app/app_exports.dart';
-import 'package:survey_app/features/mata_kuliah/presentation/pages/select_mata_kuliah_dosen_page.dart';
-import 'package:survey_app/features/questions/presentation/pages/questions_list_page.dart';
-import 'package:survey_app/shared/pages/loading_page.dart';
 
 /*
 Example Use of Go_Router:

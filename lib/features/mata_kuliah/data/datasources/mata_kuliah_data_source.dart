@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:survey_app/features/mata_kuliah/data/models/mata_kuliah_model.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 abstract class MataKuliahRemoteDataSource {
   Future<List<MataKuliahModel>> getAllMataKuliah();

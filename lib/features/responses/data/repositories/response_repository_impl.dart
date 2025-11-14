@@ -1,9 +1,4 @@
-import 'package:dartz/dartz.dart';
-import 'package:survey_app/core/error/failure.dart';
-import 'package:survey_app/features/responses/data/datasources/response_remote_data_source.dart';
-import 'package:survey_app/features/responses/data/models/response_model.dart';
-import 'package:survey_app/features/responses/domain/entities/response_entity.dart';
-import 'package:survey_app/features/responses/domain/repositories/response_repository.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class ResponseRepositoryImpl implements ResponseRepository {
   final ResponseRemoteDataSource remoteDataSource;

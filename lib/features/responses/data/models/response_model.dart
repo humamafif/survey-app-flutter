@@ -1,4 +1,4 @@
-import 'package:survey_app/features/responses/domain/entities/response_entity.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class ResponseModel extends ResponseEntity {
   const ResponseModel({

@@ -1,5 +1,4 @@
 import 'package:survey_app/core/app/app_exports.dart';
-import 'package:survey_app/features/dosens/domain/entities/dosen_entity.dart';
 
 class MataKuliahEntity extends Equatable {
   final int id;

@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:survey_app/core/app/theme/colors/app_color.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class AppTextStyles {
   // Private constructor to prevent instantiation

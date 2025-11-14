@@ -1,4 +1,4 @@
-import 'package:survey_app/features/dosens/domain/entities/dosen_entity.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class DosenModel extends DosenEntity {
   const DosenModel({required super.id, required super.name});

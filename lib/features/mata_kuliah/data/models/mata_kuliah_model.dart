@@ -1,6 +1,4 @@
-import 'package:survey_app/features/dosens/data/models/dosen_model.dart';
-import 'package:survey_app/features/dosens/domain/entities/dosen_entity.dart';
-import 'package:survey_app/features/mata_kuliah/domain/entities/mata_kuliah_entity.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class MataKuliahModel extends MataKuliahEntity {
   const MataKuliahModel({

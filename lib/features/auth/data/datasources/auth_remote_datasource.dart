@@ -1,8 +1,5 @@
 import 'dart:math';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:survey_app/core/app/app_exports.dart';
 
 abstract class AuthRemoteDatasource {

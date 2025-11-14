@@ -1,9 +1,4 @@
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:survey_app/core/app/app_exports.dart';
-import 'package:survey_app/features/dosens/presentation/bloc/dosens_bloc.dart';
-import 'package:survey_app/features/mata_kuliah/presentation/bloc/mata_kuliah_bloc.dart';
-import 'package:survey_app/features/questions/presentation/bloc/questions_bloc.dart';
-import 'package:survey_app/features/responses/presentation/bloc/responses_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

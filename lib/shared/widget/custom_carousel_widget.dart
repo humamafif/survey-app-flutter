@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:survey_app/core/app/app_exports.dart';
 
 class CustomCarousel extends StatelessWidget {
@@ -8,7 +7,7 @@ class CustomCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: 200.h,
+        height: 250.h,
         autoPlay: true,
         enlargeCenterPage: true,
         viewportFraction: 0.9,

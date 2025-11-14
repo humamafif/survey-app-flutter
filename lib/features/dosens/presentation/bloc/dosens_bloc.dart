@@ -1,10 +1,4 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:survey_app/features/dosens/domain/entities/dosen_entity.dart';
-import 'package:survey_app/features/dosens/domain/usecases/get_all_dosen_usecase.dart';
-
-part 'dosens_event.dart';
-part 'dosens_state.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class DosensBloc extends Bloc<DosensEvent, DosensState> {
   final GetAllDosenUsecase getAllDosenUsecase;

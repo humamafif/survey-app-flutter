@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:survey_app/core/app/theme/colors/app_color.dart';
-import 'package:survey_app/core/app/theme/style/app_text_styles.dart';
-import 'package:survey_app/features/questions/domain/entities/question_entity.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class SurveyQuestionCard extends StatefulWidget {
   final QuestionEntity question;

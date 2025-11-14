@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class QuestionEntity extends Equatable {
   final int id;

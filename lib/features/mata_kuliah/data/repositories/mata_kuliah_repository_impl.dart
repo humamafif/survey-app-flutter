@@ -1,8 +1,4 @@
-import 'package:dartz/dartz.dart';
-import 'package:survey_app/core/error/failure.dart';
-import 'package:survey_app/features/mata_kuliah/data/datasources/mata_kuliah_data_source.dart';
-import 'package:survey_app/features/mata_kuliah/domain/entities/mata_kuliah_entity.dart';
-import 'package:survey_app/features/mata_kuliah/domain/repositories/mata_kuliah_repository.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class MataKuliahRepositoryImpl implements MataKuliahRepository {
   final MataKuliahRemoteDataSource remoteDataSource;

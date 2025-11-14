@@ -1,4 +1,4 @@
-part of 'dosens_bloc.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 abstract class DosensState extends Equatable {
   const DosensState();

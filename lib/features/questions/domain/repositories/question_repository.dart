@@ -1,6 +1,4 @@
-import 'package:dartz/dartz.dart';
-import 'package:survey_app/core/error/failure.dart';
-import 'package:survey_app/features/questions/domain/entities/question_entity.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 abstract class QuestionRepository {
   Future<Either<Failure, List<QuestionEntity>>> getQuestionsBySurveyId(

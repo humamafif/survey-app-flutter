@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:loading_indicator/loading_indicator.dart';
-import 'package:survey_app/core/app/theme/colors/app_color.dart';
-import 'package:typewritertext/typewritertext.dart';
+
+import 'package:survey_app/core/app/app_exports.dart';
 
 class LoadingPage extends StatelessWidget {
   const LoadingPage({super.key});

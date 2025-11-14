@@ -1,6 +1,4 @@
 import 'package:survey_app/core/app/app_exports.dart';
-import 'package:survey_app/shared/pages/loading_page.dart';
-import 'package:survey_app/shared/utils/first_name.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

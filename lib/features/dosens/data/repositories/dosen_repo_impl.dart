@@ -1,9 +1,4 @@
-import 'package:dartz/dartz.dart';
-import 'package:survey_app/core/error/failure.dart';
-import 'package:survey_app/features/dosens/data/datasources/dosen_remote_datasource.dart';
-import 'package:survey_app/features/dosens/data/models/dosen_model.dart';
-import 'package:survey_app/features/dosens/domain/entities/dosen_entity.dart';
-import 'package:survey_app/features/dosens/domain/repositories/dosen_repository.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class DosenRepoImpl extends DosenRepository {
   final DosenRemoteDatasource dosenRemoteDatasource;

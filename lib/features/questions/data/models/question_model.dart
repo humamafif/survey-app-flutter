@@ -1,4 +1,4 @@
-import 'package:survey_app/features/questions/domain/entities/question_entity.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 class QuestionModel extends QuestionEntity {
   const QuestionModel({

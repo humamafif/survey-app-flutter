@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:survey_app/features/dosens/data/models/dosen_model.dart';
+import 'package:survey_app/core/app/app_exports.dart';
 
 abstract class DosenRemoteDatasource {
   Future<List<DosenModel>> getAllDosen();
