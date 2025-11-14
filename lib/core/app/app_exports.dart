@@ -1,7 +1,7 @@
 //  Core & Shared Modules
 export 'package:survey_app/core/core.dart';
 export 'package:survey_app/shared/shared.dart';
-export 'package:survey_app/firebase_options.dart';
+export 'package:survey_app/core/app/firebase/firebase_options.dart';
 
 //  Feature Modules
 export 'package:survey_app/features/auth/auth.dart';
